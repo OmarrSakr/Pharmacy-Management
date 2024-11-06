@@ -39,7 +39,7 @@ We welcome contributions to **Pharmacy Management**! Here’s how you can help:
 2. *Clone your fork* - Use the command:
    
    ```bash
-   git clone https://github.com/OmarrSakr/DevFolio-Website.git
+   git clone https://github.com/OmarrSakr/Pharmacy-Management.git
 
 ---
 
