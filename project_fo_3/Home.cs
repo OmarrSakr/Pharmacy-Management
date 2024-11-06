@@ -28,8 +28,10 @@ namespace project_fo_3
         private void pictureBox3_Click(object sender, EventArgs e)
         {
             Hide();
-            
-           
+            Hide(); 
+            Manufacturer ma = new Manufacturer(); 
+            ma.ShowDialog();
+
         }
 
         private void pictureBox2_Click(object sender, EventArgs e)
