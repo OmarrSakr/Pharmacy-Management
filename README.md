@@ -32,17 +32,6 @@ This project is currently functional but relies on file handling instead of a da
 
 ---
 
-## How to Use 🚀  
-
-We welcome contributions to **Pharmacy Management**! Here’s how you can help:
-1. *Fork the repository* - Click the "Fork" button at the top right of the repository page.
-2. *Clone your fork* - Use the command:
-   
-   ```bash
-   git clone https://github.com/OmarrSakr/Pharmacy-Management.git
-
----
-
 ## 🔑 Login Information:
 
 - Username: `omar`
@@ -89,6 +78,17 @@ string password = "123";
 If you need to change the credentials, simply update the `username` and `password` variables in the code.
 Make sure to test the program after making changes to ensure proper functionality.
 
+---
+## How to Use 🚀  
+
+We welcome `contributions` to **Pharmacy Management**! Here’s how you can help:
+1. *Fork the repository* - Click the "Fork" button at the top right of the repository page.
+2. *Clone your fork* - Use the command:
+   
+   ```bash
+   git clone https://github.com/OmarrSakr/Pharmacy-Management.git
+
+---
 ## 🔄 Future Enhancements:
 
 - `Database` Integration (e.g., SQL Server) for more reliable and scalable data management.
