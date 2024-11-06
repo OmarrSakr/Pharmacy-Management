@@ -31,6 +31,18 @@ management, billing, medicine tracking, and manufacturer records.
 This project is currently functional but relies on file handling instead of a database. The UI is non-responsive and designed primarily for desktop usage.
 
 ---
+
+## How to Use 🚀  
+
+We welcome contributions to **Pharmacy Management**! Here’s how you can help:
+1. *Fork the repository* - Click the "Fork" button at the top right of the repository page.
+2. *Clone your fork* - Use the command:
+   
+   ```bash
+   git clone https://github.com/OmarrSakr/DevFolio-Website.git
+
+---
+
 ## 🔑 Login Information:
 
 - Username: `omar`
@@ -66,6 +78,7 @@ Below is an example of how the warning message is implemented:
 
   }
 ```
+
 💡 How to Disable the Warning Message:
 To disable the warning message or modify the login credentials, you can update them directly in the code. Below is where the username and password are hardcoded:
 ```
