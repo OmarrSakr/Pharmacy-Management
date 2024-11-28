@@ -54,5 +54,10 @@ namespace project_fo_3
             Login back = new Login();
             back.ShowDialog();
         }
+
+        private void Home_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

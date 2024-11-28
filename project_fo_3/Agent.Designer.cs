@@ -277,7 +277,7 @@ namespace project_fo_3
             this.label10.ForeColor = System.Drawing.Color.DarkRed;
             this.label10.Location = new System.Drawing.Point(732, 113);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(151, 32);
+            this.label10.Size = new System.Drawing.Size(152, 32);
             this.label10.TabIndex = 27;
             this.label10.Text = "Agent List";
             // 
@@ -501,8 +501,10 @@ namespace project_fo_3
             this.Controls.Add(this.label3);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+ 
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Agent";
+            this.Load += new System.EventHandler(this.Agent_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

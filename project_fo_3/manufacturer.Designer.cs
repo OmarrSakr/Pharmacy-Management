@@ -161,6 +161,7 @@ namespace project_fo_3
             this.tb1.SelectedText = "";
             this.tb1.Size = new System.Drawing.Size(178, 30);
             this.tb1.TabIndex = 17;
+            this.tb1.TextChanged += new System.EventHandler(this.tb1_TextChanged);
             // 
             // tb2
             // 
@@ -212,7 +213,7 @@ namespace project_fo_3
             this.label7.ForeColor = System.Drawing.Color.DarkRed;
             this.label7.Location = new System.Drawing.Point(670, 114);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(250, 32);
+            this.label7.Size = new System.Drawing.Size(251, 32);
             this.label7.TabIndex = 19;
             this.label7.Text = "Manufacturer List";
             // 
@@ -333,7 +334,7 @@ namespace project_fo_3
             this.Address.Name = "Address";
             this.Address.Width = 125;
             // 
-            // manufacturer
+            // Manufacturer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;

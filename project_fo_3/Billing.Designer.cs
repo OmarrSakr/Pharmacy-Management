@@ -105,7 +105,7 @@ namespace project_fo_3
             this.label10.ForeColor = System.Drawing.Color.DarkRed;
             this.label10.Location = new System.Drawing.Point(122, 128);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(177, 32);
+            this.label10.Size = new System.Drawing.Size(178, 32);
             this.label10.TabIndex = 28;
             this.label10.Text = "Billing Form";
             // 
@@ -265,6 +265,7 @@ namespace project_fo_3
             this.Name = "Billing";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Billing";
+            this.Load += new System.EventHandler(this.Billing_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();

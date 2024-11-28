@@ -26,7 +26,7 @@ namespace project_fo_3
 
 
             //for save data in your file
-            string filename = @"D:\Project_OOP\FO_organization\project_fo_3\project_fo_3\savedLogin.txt";
+            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\savedLogin.txt";
             FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             StreamWriter sw = new StreamWriter(myfile);

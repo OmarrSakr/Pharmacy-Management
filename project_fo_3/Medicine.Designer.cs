@@ -222,7 +222,7 @@ namespace project_fo_3
             this.label7.ForeColor = System.Drawing.Color.DarkRed;
             this.label7.Location = new System.Drawing.Point(697, 116);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(194, 32);
+            this.label7.Size = new System.Drawing.Size(195, 32);
             this.label7.TabIndex = 16;
             this.label7.Text = "Medicine List";
             // 
@@ -428,6 +428,7 @@ namespace project_fo_3
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Medicine";
+            this.Load += new System.EventHandler(this.Medicine_Load);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);

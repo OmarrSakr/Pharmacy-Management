@@ -41,7 +41,7 @@ namespace project_fo_3
             dgvEmp.Rows.Add(data);
 
             // Save data to file
-            string filename = @"D:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Manufacturer.txt";
+            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Manufacturer.txt";
             using (FileStream myfile = new FileStream(filename, FileMode.Append, FileAccess.Write))
             using (StreamWriter sw = new StreamWriter(myfile))
             {
@@ -59,7 +59,7 @@ namespace project_fo_3
 
         private void button3_Click(object sender, EventArgs e)
         {
-            string filename = @"D:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Manufacturer.txt";
+            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Manufacturer.txt";
             using (FileStream myfile = new FileStream(filename, FileMode.Open, FileAccess.Read))
             using (StreamReader sr = new StreamReader(myfile))
             {
@@ -85,7 +85,7 @@ namespace project_fo_3
             tb3.Clear();
             tb4.Clear();
 
-            string filename = @"D:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Manufacturer.txt";
+            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Manufacturer.txt";
             using (FileStream myfile = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
             using (StreamReader sr = new StreamReader(myfile))
             using (StreamWriter sw = new StreamWriter(myfile))
@@ -109,5 +109,10 @@ namespace project_fo_3
         }
 
         private void tb2_TextChanged(object sender, EventArgs e) { }
+
+        private void tb1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

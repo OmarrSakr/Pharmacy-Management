@@ -37,7 +37,7 @@ namespace project_fo_3
             dgvEmp.Rows.Add(data);
 
             // حفظ البيانات إلى الملف
-            string filename = @"D:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Billing.txt";
+            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Billing.txt";
             using (FileStream myfile = new FileStream(filename, FileMode.Append, FileAccess.Write))
             using (StreamWriter sw = new StreamWriter(myfile))
             {
@@ -53,6 +53,11 @@ namespace project_fo_3
         private void tb1_TextChanged(object sender, EventArgs e)
         {
             // يمكنك إضافة أي معالجات إضافية هنا إذا لزم الأمر
+        }
+
+        private void Billing_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
