@@ -47,7 +47,7 @@ namespace project_fo_3
             dgvEmp.Rows.Add(data);
 
             // حفظ البيانات إلى الملف
-            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Agent.txt";
+            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\Agent.txt";
             using (FileStream myfile = new FileStream(filename, FileMode.Append, FileAccess.Write))
             using (StreamWriter sw = new StreamWriter(myfile))
             {
@@ -69,7 +69,7 @@ namespace project_fo_3
         private void button3_Click(object sender, EventArgs e)
         {
             // البحث عن العنصر
-            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Agent.txt";
+            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\Agent.txt";
 
             using (FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Read))
             using (StreamReader sr = new StreamReader(myfile))
@@ -98,7 +98,7 @@ namespace project_fo_3
         private void button1_Click(object sender, EventArgs e)
         {
             // وضع علامة على العنصر
-            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Agent.txt";
+            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\Agent.txt";
 
             using (FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite))
             using (StreamReader sr = new StreamReader(myfile))

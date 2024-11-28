@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\project_fo_3"
+    "\\project_fo_3",
+    "\\project_fo_3\\Properties"
   ],
-  "SelectedNode": "\\project_fo_3\\Agent.cs",
+  "SelectedNode": "\\project_fo_3.sln",
   "PreviewInSolutionExplorer": false
 }

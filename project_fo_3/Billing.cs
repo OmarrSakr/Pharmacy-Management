@@ -37,7 +37,7 @@ namespace project_fo_3
             dgvEmp.Rows.Add(data);
 
             // حفظ البيانات إلى الملف
-            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Billing.txt";
+            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\Billing.txt";
             using (FileStream myfile = new FileStream(filename, FileMode.Append, FileAccess.Write))
             using (StreamWriter sw = new StreamWriter(myfile))
             {

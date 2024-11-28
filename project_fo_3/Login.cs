@@ -26,7 +26,7 @@ namespace project_fo_3
 
 
             //for save data in your file
-            string filename = @"E:\Project_OOP\FO_organization\project_fo_3\project_fo_3\savedLogin.txt";
+            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\savedLogin.txt";
             FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
             StreamWriter sw = new StreamWriter(myfile);
@@ -74,6 +74,11 @@ namespace project_fo_3
         private void username_TextChanged(object sender, EventArgs e)
         {
             username.Font = new Font("Microsoft Sans Serif", 12);
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
+
         }
     }
 
