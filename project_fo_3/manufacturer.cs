@@ -1,5 +1,7 @@
 ﻿using System;
 using System.IO;
+using System.Data;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace project_fo_3
@@ -18,106 +20,311 @@ namespace project_fo_3
 
         private void button2_Click(object sender, EventArgs e)
         {
+            // مسح الحقول بعد إضافة البيانات
+            tb1.Clear();
+            tb2.Clear();
+            tb3.Clear();
+            tb4.Clear();
             Hide();
             Home back = new Home();
             back.ShowDialog();
         }
 
+
+        // الاتصال بقاعدة البيانات
+        public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\PROJECT_OOP\FO_ORGANIZATION\PHARMACY-MANAGEMENT\PROJECT_FO_3\PHARMACYOB.MDF;Integrated Security=True;");
+        // Add Input
+        // إضافة اسم شركة جديد
         private void button4_Click(object sender, EventArgs e)
         {
-            DataGridView dgvEmp = dataGridView1;
-            dgvEmp.ColumnCount = 4;
-            dgvEmp.Columns[0].Name = "ID";
-            dgvEmp.Columns[1].Name = "Name";
-            dgvEmp.Columns[2].Name = "Phone";
-            dgvEmp.Columns[3].Name = "Address";
-
-            string id = tb1.Text;
-            string name = tb2.Text;
-            string phone = tb3.Text;
-            string address = tb4.Text;
-
-            object[] data = { id, name, phone, address };
-            dgvEmp.Rows.Add(data);
-
-            // Save data to file
-            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\Manufacturer.txt";
-            using (FileStream myfile = new FileStream(filename, FileMode.Append, FileAccess.Write))
-            using (StreamWriter sw = new StreamWriter(myfile))
+            try
             {
-                string record = $"{id}\t{name}\t{phone}\t{address}\r\n";
-                sw.WriteLine(record);
+                // التأكد من أن الحقول الأساسية ليست فارغة أو تحتوي على مسافات فارغة
+                if (string.IsNullOrWhiteSpace(tb1.Text) ||  // Company Id
+                    string.IsNullOrWhiteSpace(tb2.Text) ||  // Company Name
+                    string.IsNullOrWhiteSpace(tb3.Text) ||  // Phone Number
+                    string.IsNullOrWhiteSpace(tb4.Text))    // Address
+                {
+                    MessageBox.Show("Please fill all fields.");
+                    return;
+                }
+
+                // فتح الاتصال بقاعدة البيانات
+                con.Open();
+
+                // استعلام الإدخال (Insert)
+                string query = "INSERT INTO CompanyTb1 (CompId, CompName, CompPhone, CompAddress) " +
+                               "VALUES (@CompId, @CompName, @CompPhone, @CompAddress)";
+
+                // إعداد الأمر مع المعلمات
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    // تغيير البيانات المدخلة إلى NVARCHAR فقط للحقلين الذين يدعمان اللغة العربية
+                    cmd.Parameters.Add("@CompId", SqlDbType.NVarChar).Value = tb1.Text.Trim();   // يجب أن يدعم الأرقام والرموز
+                    cmd.Parameters.Add("@CompName", SqlDbType.NVarChar).Value = tb2.Text.Trim(); // يدعم النصوص العربية
+                    cmd.Parameters.Add("@CompPhone", SqlDbType.NVarChar).Value = tb3.Text.Trim(); // يدعم الأرقام
+                    cmd.Parameters.Add("@CompAddress", SqlDbType.NVarChar).Value = tb4.Text.Trim(); // يدعم النصوص العربية
+
+                    // تنفيذ الأمر
+                    cmd.ExecuteNonQuery();
+                }
+
+                // عرض رسالة نجاح
+                MessageBox.Show("Company Successfully Added");
+
+                // تحديث البيانات في DataGridView
+                PopulateGrid(CompanyGV);  // تأكد من أن PopulateGrid تعمل بشكل صحيح
+
+                // مسح الحقول بعد إضافة البيانات
+                tb1.Clear();
+                tb2.Clear();
+                tb3.Clear();
+                tb4.Clear();
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                // التأكد من إغلاق الاتصال
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+        }
+        // تعديل بيانات الشركة
+        private void button3_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(tb1.Text))
+                {
+                    MessageBox.Show("Please enter the Company Id to update.");
+                    return;
+                }
 
-            MessageBox.Show("Your data has been added");
+                con.Open();
 
+                // التحقق من وجود الشركة
+                string checkQuery = "SELECT COUNT(*) FROM CompanyTb1 WHERE CompId = @CompId";
+                using (SqlCommand checkCmd = new SqlCommand(checkQuery, con))
+                {
+                    checkCmd.Parameters.AddWithValue("@CompId", tb1.Text);
+                    int count = (int)checkCmd.ExecuteScalar();
+                    if (count == 0)
+                    {
+                        MessageBox.Show("Company not found.");
+                        return;
+                    }
+                }
+
+                // استعلام التحديث (Update)
+                string query = "UPDATE CompanyTb1 SET " +
+                               "CompName = @CompName, CompPhone = @CompPhone, CompAddress = @CompAddress " +
+                               "WHERE CompId = @CompId";
+
+                // إعداد الأمر مع المعلمات
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@CompId", tb1.Text);
+                    cmd.Parameters.AddWithValue("@CompName", tb2.Text);
+                    cmd.Parameters.AddWithValue("@CompPhone", tb3.Text);
+                    cmd.Parameters.AddWithValue("@CompAddress", tb4.Text);
+
+                    cmd.ExecuteNonQuery();
+                }
+
+                // عرض رسالة نجاح
+                MessageBox.Show("Company Successfully Updated");
+
+                // تحديث البيانات في DataGridView
+                PopulateGrid(CompanyGV);
+
+                // مسح الحقول بعد التحديث
+                tb1.Clear();
+                tb2.Clear();
+                tb3.Clear();
+                tb4.Clear();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        // حذف بيانات الشركة
+        private void button1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(tb1.Text))
+                {
+                    MessageBox.Show("Please enter the Company Id to delete.");
+                    return;
+                }
+
+                con.Open();
+
+                // استعلام الحذف (Delete)
+                string query = "DELETE FROM CompanyTb1 WHERE CompId = @CompId";
+
+                // إعداد الأمر مع المعلمات
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@CompId", tb1.Text);
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        // مسح الحقول بعد إضافة البيانات
+                        tb1.Clear();
+                        tb2.Clear();
+                        tb3.Clear();
+                        tb4.Clear();
+
+                        MessageBox.Show("Company Successfully Deleted");
+                    }
+                    else
+                    {
+                        MessageBox.Show("Company not found.");
+                    }
+                }
+
+                PopulateGrid(CompanyGV);  // تحديث البيانات في DataGridView
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        public void PopulateGrid(DataGridView CompanyGV)
+        {
+            try
+            {
+                if (con.State == System.Data.ConnectionState.Closed)
+                    con.Open();
+
+                string query = "SELECT CompId, CompName, CompPhone, CompAddress FROM CompanyTb1";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, con);
+                DataTable dt = new DataTable();
+                adapter.Fill(dt);
+
+                CompanyGV.DataSource = dt;
+            }
+            catch (SqlException sqlEx)
+            {
+                MessageBox.Show($"Database Error: {sqlEx.Message}");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                if (con.State == System.Data.ConnectionState.Open)
+                    con.Close();
+            }
+        }
+
+        private void Company_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                // تمرير عنصر التحكم CompanyGV عند استدعاء الدالة
+                PopulateGrid(CompanyGV);
+            }
+            catch (Exception ex)
+            {
+                // عرض رسالة خطأ إذا فشل التحميل
+                MessageBox.Show("Error loading data: " + ex.Message);
+            }
+        }
+
+        private void CompanyGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                // التأكد من أن الصف الذي تم الضغط عليه هو صف غير فارغ
+                if (e.RowIndex >= 0)
+                {
+                    // الحصول على البيانات من السطر المحدد
+                    DataGridViewRow row = CompanyGV.Rows[e.RowIndex];
+
+                    // التأكد من أن السطر يحتوي على قيم قبل ملء الحقول
+                    if (row.Cells["CompId"].Value != DBNull.Value && row.Cells["CompName"].Value != DBNull.Value &&
+                        row.Cells["CompPhone"].Value != DBNull.Value && row.Cells["CompAddress"].Value != DBNull.Value)
+                    {
+                        // ملء الحقول بالقيم من السطر المحدد
+                        tb1.Text = row.Cells["CompId"].Value.ToString();      // Company ID
+                        tb2.Text = row.Cells["CompName"].Value.ToString();    // Company Name
+                        tb3.Text = row.Cells["CompPhone"].Value.ToString();   // Phone Number
+                        tb4.Text = row.Cells["CompAddress"].Value.ToString(); // Company Address
+                    }
+                    else
+                    {
+                        MessageBox.Show("Some fields are empty in the selected row.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // عرض رسالة خطأ إذا حدث شيء غير متوقع
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        private void CompanyGV_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                // التأكد من أن الصف الذي تم الضغط عليه هو صف غير فارغ
+                if (e.RowIndex >= 0)
+                {
+                    // الحصول على البيانات من السطر المحدد
+                    DataGridViewRow row = CompanyGV.Rows[e.RowIndex];
+
+                    // التأكد من أن السطر يحتوي على قيم قبل ملء الحقول
+                    if (row.Cells["CompId"].Value != DBNull.Value && row.Cells["CompName"].Value != DBNull.Value &&
+                        row.Cells["CompPhone"].Value != DBNull.Value && row.Cells["CompAddress"].Value != DBNull.Value)
+                    {
+                        // ملء الحقول بالقيم من السطر المحدد
+                        tb1.Text = row.Cells["CompId"].Value.ToString();      // Company ID
+                        tb2.Text = row.Cells["CompName"].Value.ToString();    // Company Name
+                        tb3.Text = row.Cells["CompPhone"].Value.ToString();   // Phone Number
+                        tb4.Text = row.Cells["CompAddress"].Value.ToString(); // Company Address
+                    }
+                    else
+                    {
+                        MessageBox.Show("Some fields are empty in the selected row.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // عرض رسالة خطأ إذا حدث شيء غير متوقع
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+        private void button5_Click(object sender, EventArgs e)
+        {
+            // مسح الحقول بعد إضافة البيانات
             tb1.Clear();
             tb2.Clear();
             tb3.Clear();
             tb4.Clear();
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\Manufacturer.txt";
-            using (FileStream myfile = new FileStream(filename, FileMode.Open, FileAccess.Read))
-            using (StreamReader sr = new StreamReader(myfile))
-            {
-                string record;
-                while ((record = sr.ReadLine()) != null)
-                {
-                    string[] fields = record.Split('\t');
-                    if (tb1.Text == fields[0])
-                    {
-                        tb2.Text = fields[1];
-                        tb3.Text = fields[2];
-                        tb4.Text = fields[3];
-                        return;
-                    }
-                }
-            }
-            MessageBox.Show("Item not found");
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            tb2.Clear();
-            tb3.Clear();
-            tb4.Clear();
-
-            string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\Manufacturer.txt";
-            using (FileStream myfile = new FileStream(filename, FileMode.Open, FileAccess.ReadWrite))
-            using (StreamReader sr = new StreamReader(myfile))
-            using (StreamWriter sw = new StreamWriter(myfile))
-            {
-                string record;
-                int step = 0;
-                while ((record = sr.ReadLine()) != null)
-                {
-                    string[] fields = record.Split('\t');
-                    if (tb1.Text == fields[0])
-                    {
-                        myfile.Seek(step, SeekOrigin.Begin);
-                        sw.Write("*" + record); // Add a mark to the existing line
-                        sw.Flush();
-                        return;
-                    }
-                    step = (int)myfile.Position; // Update step for the next iteration
-                }
-            }
-            MessageBox.Show("Item not found for marking");
-        }
-
-        private void tb2_TextChanged(object sender, EventArgs e) { }
-
-        private void tb1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Manufacturer_Load(object sender, EventArgs e)
-        {
-
-        }
+       
     }
+    
 }

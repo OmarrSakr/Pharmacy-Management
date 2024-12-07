@@ -33,6 +33,7 @@ namespace project_fo_3
             this.label1 = new System.Windows.Forms.Label();
             this.gunaCircleProgressBar1 = new Guna.UI.WinForms.GunaCircleProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label2 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -54,24 +55,37 @@ namespace project_fo_3
             this.gunaCircleProgressBar1.IdleOffset = 20;
             this.gunaCircleProgressBar1.Image = null;
             this.gunaCircleProgressBar1.ImageSize = new System.Drawing.Size(52, 52);
-            this.gunaCircleProgressBar1.Location = new System.Drawing.Point(159, 86);
+            this.gunaCircleProgressBar1.Location = new System.Drawing.Point(165, 79);
             this.gunaCircleProgressBar1.Name = "gunaCircleProgressBar1";
-            this.gunaCircleProgressBar1.ProgressMaxColor = System.Drawing.Color.Green;
-            this.gunaCircleProgressBar1.ProgressMinColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(0)))));
+            this.gunaCircleProgressBar1.ProgressMaxColor = System.Drawing.Color.DarkGreen;
+            this.gunaCircleProgressBar1.ProgressMinColor = System.Drawing.Color.LimeGreen;
             this.gunaCircleProgressBar1.ProgressOffset = 20;
-            this.gunaCircleProgressBar1.Size = new System.Drawing.Size(215, 172);
+            this.gunaCircleProgressBar1.Size = new System.Drawing.Size(215, 191);
             this.gunaCircleProgressBar1.TabIndex = 1;
+
             // 
             // timer1
             // 
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.ForeColor = System.Drawing.Color.WhiteSmoke;
+            this.label2.Location = new System.Drawing.Point(186, 277);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(167, 25);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "CreatedByOmar";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DarkRed;
-            this.ClientSize = new System.Drawing.Size(544, 291);
+            this.ClientSize = new System.Drawing.Size(544, 311);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.gunaCircleProgressBar1);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
@@ -89,6 +103,7 @@ namespace project_fo_3
         private System.Windows.Forms.Label label1;
         private Guna.UI.WinForms.GunaCircleProgressBar gunaCircleProgressBar1;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

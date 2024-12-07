@@ -19,25 +19,28 @@ namespace project_fo_3
         }
        
 
-            private void button1_Click(object sender, EventArgs e)
+            private void button1_Click_1(object sender, EventArgs e)
             {
                 string name = username.Text;
                 string pass = password.Text;
 
-
             //for save data in your file
             string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\savedLogin.txt";
-            FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite);
 
-            StreamWriter sw = new StreamWriter(myfile);
-            sw.WriteLine($"username: {username.Text}\t password:{password.Text}");
-            sw.Flush();
-            MessageBox.Show("Your data has been saved");
-
-
-            if (name == "omar" && pass == "123")
+            // استخدام using لضمان إغلاق الموارد تلقائيًا
+            using (FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                using (StreamWriter sw = new StreamWriter(myfile))
                 {
-                    MessageBox.Show("hi,poss");
+                    sw.WriteLine($"username: {username.Text}\t password:{password.Text}");
+                }
+            }
+
+            //MessageBox.Show("Your data has been saved");
+
+
+            if (name == "admin" && pass == "123")
+                {
                     Hide();
                     Home basic = new Home();
                     basic.ShowDialog();
@@ -53,23 +56,24 @@ namespace project_fo_3
             }
 
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click_1(object sender, EventArgs e)
         {
             username.Text = password.Text = null;
         }
 
     
 
-        private void button3_Click(object sender, EventArgs e)
+        private void button3_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
         private void password_TextChanged(object sender, EventArgs e)
         {
-            password.PasswordChar = '*';
-            password.Font = new Font("Microsoft Sans Serif", 14);
+            password.PasswordChar = '●'; 
+            password.Font = new Font("Segoe UI Semibold", 12);
         }
+
 
         private void username_TextChanged(object sender, EventArgs e)
         {
@@ -80,6 +84,14 @@ namespace project_fo_3
         {
 
         }
+
+        private void guna2PictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+
+     
     }
 
 }

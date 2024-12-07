@@ -59,5 +59,13 @@ namespace project_fo_3
         {
 
         }
+
+
+        private void DashBoard_Click(object sender, EventArgs e)
+        {
+            Hide();
+            Dashboard da = new Dashboard();
+            da.ShowDialog();
+        }
     }
 }
