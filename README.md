@@ -43,30 +43,29 @@ If any attempt is made to change the username or password in the code, a warning
 This helps ensure system security by preventing unauthorized modifications to login credentials.
 Below is an example of how the warning message is implemented:
 ```
-  //for save data in your file
-  string filename = @"D:\Project_OOP\FO_organization\project_fo_3\project_fo_3\Login.txt";
-  FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-
-  StreamWriter sw = new StreamWriter(myfile);
-  sw.WriteLine($"username: {username.Text}\t password:{password.Text}");
-  sw.Flush();
-  MessageBox.Show("Your data has been saved");
-
-
-  if (name == "admin" && pass == "123")
-      {
-          MessageBox.Show("hi,poss");
-          Hide();
-          Home basic = new Home();
-          basic.ShowDialog();
-      }
-      else
-      {
-          MessageBox.Show("Error,your Username or Password is incorrect");
-          username.Text = password.Text = null;
-      }
-
-  }
+ //for save data in your file
+   string filename = @"E:\Project_OOP\FO_organization\Pharmacy-Management\savedLogin.txt";   // استخدام using لضمان إغلاق الموارد تلقائيًا
+  using (FileStream myfile = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write))
+ {
+   using (StreamWriter sw = new StreamWriter(myfile))
+   {
+      sw.WriteLine($"username: {username.Text}\t password:{password.Text}");
+   }
+}
+ //MessageBox.Show("Your data has been saved");
+ if (name == "admin" && pass == "123")
+ {
+     Hide();
+     Home basic = new Home();
+     basic.ShowDialog();
+ }
+ else
+ {
+    MessageBox.Show("Error,your Username or Password is incorrect");
+    username.Text = password.Text = null;
+ }
+}
+  
 ```
 
 💡 How to Disable the Warning Message:
