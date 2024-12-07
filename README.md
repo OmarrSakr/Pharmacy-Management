@@ -13,8 +13,8 @@
 </div>
 
 A `static desktop application` built using `C#`, designed for managing pharmacy operations. It features
-multiple modules to handle various aspects of pharmacy management, including agent
-management, billing, medicine tracking, and manufacturer records.
+multiple modules to handle various aspects of pharmacy management, including Employees
+management, billing, medicine tracking, and Companies records.
 
 ## 🛠 Technologies Used:
 
