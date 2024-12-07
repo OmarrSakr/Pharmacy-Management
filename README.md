@@ -35,7 +35,7 @@ This project is currently functional but relies on file handling instead of a da
 
 ## 🔑 Login Information:
 
-- Username: `omar`
+- Username: `admin`
 - Password: `123`
 
 ⚠ Important Notice:
@@ -53,7 +53,7 @@ Below is an example of how the warning message is implemented:
   MessageBox.Show("Your data has been saved");
 
 
-  if (name == "omar" && pass == "123")
+  if (name == "admin" && pass == "123")
       {
           MessageBox.Show("hi,poss");
           Hide();
@@ -73,7 +73,7 @@ Below is an example of how the warning message is implemented:
 To disable the warning message or modify the login credentials, you can update them directly in the code. Below is where the username and password are hardcoded:
 ```
 // Example of where login credentials are set
-string username = "omar";
+string username = "admin";
 string password = "123";
 ```
 If you need to change the credentials, simply update the `username` and `password` variables in the code.
