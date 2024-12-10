@@ -9,12 +9,9 @@
   <img src="https://github.com/user-attachments/assets/c6a0ba51-9616-41cb-83a3-58518a628acb" alt="Screenshot 6"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/acdec246-0486-48c8-b64c-b7950648de85" alt="Screenshot 7"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/db3a0ee8-4b64-45a9-8cb8-29e26bbe9f30" alt="Screenshot 8"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/a9b11e29-5bdb-43f8-94b5-2cb9cf1b8bf2" alt="Screenshot 9"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/881326a4-1e2d-455b-ba9b-4990d13550ed" alt="Screenshot 10"style="width: 48%;" />
+  <img src="https://github.com/user-attachments/assets/a86a5c7c-6477-47a5-8fcd-8115eb9e581a" alt="Screenshot 9"style="width: 24%;" />
+  <img src="" alt="Screenshot 10"style="width: 48%;" />
 </div>
-
-
-
 
 
 A `static desktop application` built using `C#`, designed for managing pharmacy operations. It features
