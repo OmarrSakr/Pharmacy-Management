@@ -92,7 +92,7 @@ namespace project_fo_3
             this.label3.BackColor = System.Drawing.Color.White;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Navy;
-            this.label3.Location = new System.Drawing.Point(114, 172);
+            this.label3.Location = new System.Drawing.Point(129, 172);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(120, 29);
             this.label3.TabIndex = 1;
@@ -103,7 +103,7 @@ namespace project_fo_3
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
             this.pictureBox1.Location = new System.Drawing.Point(88, 214);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(188, 172);
+            this.pictureBox1.Size = new System.Drawing.Size(214, 160);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
@@ -138,7 +138,7 @@ namespace project_fo_3
             this.label5.BackColor = System.Drawing.Color.White;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.Navy;
-            this.label5.Location = new System.Drawing.Point(104, 439);
+            this.label5.Location = new System.Drawing.Point(117, 442);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(145, 29);
             this.label5.TabIndex = 5;
@@ -149,7 +149,7 @@ namespace project_fo_3
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
             this.pictureBox3.Location = new System.Drawing.Point(88, 484);
             this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(188, 159);
+            this.pictureBox3.Size = new System.Drawing.Size(214, 159);
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 6;
             this.pictureBox3.TabStop = false;
@@ -194,7 +194,7 @@ namespace project_fo_3
             this.DashBoard.Image = ((System.Drawing.Image)(resources.GetObject("DashBoard.Image")));
             this.DashBoard.Location = new System.Drawing.Point(564, 325);
             this.DashBoard.Name = "DashBoard";
-            this.DashBoard.Size = new System.Drawing.Size(305, 176);
+            this.DashBoard.Size = new System.Drawing.Size(305, 182);
             this.DashBoard.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.DashBoard.TabIndex = 10;
             this.DashBoard.TabStop = false;

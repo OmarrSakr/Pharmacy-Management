@@ -54,6 +54,7 @@ namespace project_fo_3
             this.MedicineGV = new Guna.UI2.WinForms.Guna2DataGridView();
             this.ExpDate = new Guna.UI2.WinForms.Guna2DateTimePicker();
             this.button5 = new System.Windows.Forms.Button();
+            this.SelectCompany = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MedicineGV)).BeginInit();
@@ -220,7 +221,7 @@ namespace project_fo_3
             // 
             this.button2.BackColor = System.Drawing.Color.Green;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(228, 647);
+            this.button2.Location = new System.Drawing.Point(228, 668);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(99, 37);
             this.button2.TabIndex = 17;
@@ -232,7 +233,7 @@ namespace project_fo_3
             // 
             this.button1.BackColor = System.Drawing.Color.Green;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(286, 587);
+            this.button1.Location = new System.Drawing.Point(286, 608);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(99, 39);
             this.button1.TabIndex = 18;
@@ -244,19 +245,19 @@ namespace project_fo_3
             // 
             this.button3.BackColor = System.Drawing.Color.Green;
             this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.Location = new System.Drawing.Point(153, 587);
+            this.button3.Location = new System.Drawing.Point(153, 608);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(99, 39);
             this.button3.TabIndex = 19;
             this.button3.Text = "Update";
             this.button3.UseVisualStyleBackColor = false;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.button3.Click += new System.EventHandler(this.button3_Click_1);
             // 
             // button4
             // 
             this.button4.BackColor = System.Drawing.Color.Green;
             this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.Location = new System.Drawing.Point(31, 587);
+            this.button4.Location = new System.Drawing.Point(31, 608);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(91, 39);
             this.button4.TabIndex = 20;
@@ -269,7 +270,7 @@ namespace project_fo_3
             this.panel2.BackColor = System.Drawing.Color.DarkRed;
             this.panel2.Controls.Add(this.label9);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel2.Location = new System.Drawing.Point(0, 742);
+            this.panel2.Location = new System.Drawing.Point(0, 782);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(1463, 32);
             this.panel2.TabIndex = 26;
@@ -308,12 +309,12 @@ namespace project_fo_3
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.MedicineGV.DefaultCellStyle = dataGridViewCellStyle3;
             this.MedicineGV.GridColor = System.Drawing.Color.Firebrick;
-            this.MedicineGV.Location = new System.Drawing.Point(640, 163);
+            this.MedicineGV.Location = new System.Drawing.Point(596, 163);
             this.MedicineGV.Name = "MedicineGV";
             this.MedicineGV.RowHeadersVisible = false;
             this.MedicineGV.RowHeadersWidth = 51;
             this.MedicineGV.RowTemplate.Height = 24;
-            this.MedicineGV.Size = new System.Drawing.Size(755, 430);
+            this.MedicineGV.Size = new System.Drawing.Size(834, 430);
             this.MedicineGV.TabIndex = 29;
             this.MedicineGV.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.MedicineGV.ThemeStyle.AlternatingRowsStyle.Font = null;
@@ -336,22 +337,22 @@ namespace project_fo_3
             this.MedicineGV.ThemeStyle.RowsStyle.Height = 24;
             this.MedicineGV.ThemeStyle.RowsStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(229)))), ((int)(((byte)(255)))));
             this.MedicineGV.ThemeStyle.RowsStyle.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(71)))), ((int)(((byte)(69)))), ((int)(((byte)(94)))));
-            this.MedicineGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MedicineGV_CellContentContentClick);
-            this.MedicineGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MedicineGV_CellContentContentClick);
-            this.MedicineGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MedicineGV_CellContentContentClick);
-            this.MedicineGV.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MedicineGV_CellContentClick);
-            this.MedicineGV.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MedicineGV_CellContentClick);
+            this.MedicineGV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MedicineGV_CellContentClick);
+            this.MedicineGV.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MedicineGV_CellContentClick);
+            this.MedicineGV.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.MedicineGV_CellMouseClick);
+            this.MedicineGV.CellMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MedicineGV_CellMouseClick);
+            this.MedicineGV.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.MedicineGV_CellMouseClick);
             // 
             // ExpDate
             // 
             this.ExpDate.Checked = true;
             this.ExpDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ExpDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.ExpDate.Location = new System.Drawing.Point(52, 436);
+            this.ExpDate.Location = new System.Drawing.Point(68, 477);
             this.ExpDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.ExpDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.ExpDate.Name = "ExpDate";
-            this.ExpDate.Size = new System.Drawing.Size(275, 36);
+            this.ExpDate.Size = new System.Drawing.Size(290, 36);
             this.ExpDate.TabIndex = 30;
             this.ExpDate.Value = new System.DateTime(2024, 12, 3, 21, 18, 8, 333);
             // 
@@ -359,7 +360,7 @@ namespace project_fo_3
             // 
             this.button5.BackColor = System.Drawing.Color.Green;
             this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.Location = new System.Drawing.Point(80, 647);
+            this.button5.Location = new System.Drawing.Point(80, 668);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(99, 37);
             this.button5.TabIndex = 31;
@@ -367,11 +368,23 @@ namespace project_fo_3
             this.button5.UseVisualStyleBackColor = false;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
+            // SelectCompany
+            // 
+            this.SelectCompany.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SelectCompany.FormattingEnabled = true;
+            this.SelectCompany.Location = new System.Drawing.Point(68, 420);
+            this.SelectCompany.Name = "SelectCompany";
+            this.SelectCompany.Size = new System.Drawing.Size(290, 28);
+            this.SelectCompany.TabIndex = 50;
+            this.SelectCompany.Text = "Select Company";
+            this.SelectCompany.SelectedIndexChanged += new System.EventHandler(this.SelectCompany_SelectedIndexChanged);
+            // 
             // Medicine
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1463, 774);
+            this.ClientSize = new System.Drawing.Size(1463, 814);
+            this.Controls.Add(this.SelectCompany);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.ExpDate);
             this.Controls.Add(this.MedicineGV);
@@ -429,5 +442,6 @@ namespace project_fo_3
         private Guna.UI2.WinForms.Guna2DataGridView MedicineGV;
         private Guna.UI2.WinForms.Guna2DateTimePicker ExpDate;
         private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.ComboBox SelectCompany;
     }
 }

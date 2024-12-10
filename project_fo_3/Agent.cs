@@ -132,12 +132,28 @@ namespace project_fo_3
 
                 con.Open();
 
+                // استعلام للتحقق من وجود EmpId في قاعدة البيانات
+                string checkQuery = "SELECT COUNT(*) FROM EmployeeTab1 WHERE EmpId = @EmpId";
+                using (SqlCommand checkCmd = new SqlCommand(checkQuery, con))
+                {
+                    checkCmd.Parameters.AddWithValue("@EmpId", tb1.Text.Trim());
+
+                    int count = (int)checkCmd.ExecuteScalar();  // الحصول على العدد
+
+                    // إذا لم يكن EmpId موجود، عرض رسالة خطأ
+                    if (count == 0)
+                    {
+                        MessageBox.Show("Error: Employee ID does not exist. Cannot update.");
+                        return;
+                    }
+                }
+
                 // استعلام التحديث (Update)
-                string query = "UPDATE EmployeeTab1 SET EmpName = @EmpName, EmpSal = @EmpSal, EmpAge = @EmpAge, EmpPhone = @EmpPhone, EmpPassword = @EmpPassword " +
-                               "WHERE EmpId = @EmpId";
+                string updateQuery = "UPDATE EmployeeTab1 SET EmpName = @EmpName, EmpSal = @EmpSal, EmpAge = @EmpAge, EmpPhone = @EmpPhone, EmpPassword = @EmpPassword " +
+                                     "WHERE EmpId = @EmpId";
 
                 // إعداد الأمر مع المعلمات
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                using (SqlCommand cmd = new SqlCommand(updateQuery, con))
                 {
                     cmd.Parameters.AddWithValue("@EmpId", tb1.Text.Trim());  // التعامل مع EmpId كـ VARCHAR
                     cmd.Parameters.AddWithValue("@EmpName", tb2.Text.Trim());
@@ -172,6 +188,7 @@ namespace project_fo_3
                 con.Close();
             }
         }
+
 
 
         // زر لحذف موظف
@@ -233,12 +250,8 @@ namespace project_fo_3
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
 
-                // إنشاء نسخة جديدة من الجدول لإظهار كلمة المرور كنجوم
-                foreach (DataRow row in dt.Rows)
-                {
-                    if (row["EmpPassword"] != null)
-                        row["EmpPassword"] = new string('*', row["EmpPassword"].ToString().Length);
-                }
+                // لا حاجة لتحويل كلمة المرور إلى نجوم
+                // ببساطة سيتم عرض كلمة المرور كما هي في الجدول
 
                 EmployeeGV.DataSource = dt;
             }
@@ -252,6 +265,7 @@ namespace project_fo_3
                     con.Close();
             }
         }
+
 
 
 
@@ -294,8 +308,12 @@ namespace project_fo_3
                         tb4.Text = row.Cells["EmpSal"].Value.ToString();     // Employee Salary
                         tb5.Text = row.Cells["EmpPhone"].Value.ToString();   // Phone Number
 
-                        // إخفاء كلمة المرور كنجوم في الحقل (tb6)
-                        tb6.Text = new string('*', row.Cells["EmpPassword"].Value.ToString().Length); // Hide password with stars
+                        // تعطيل خاصية PasswordChar لعرض كلمة المرور بشكل عادي
+                        tb6.PasswordChar = '\0'; // إلغاء إخفاء كلمة المرور بنجوم
+
+                        // عرض كلمة المرور بشكل عادي
+                        tb6.Clear();
+                        tb6.Text = row.Cells["EmpPassword"].Value.ToString(); // عرض كلمة المرور دون إخفاء
                     }
                 }
             }
@@ -305,6 +323,46 @@ namespace project_fo_3
                 MessageBox.Show($"Error: {ex.Message}");
             }
         }
+
+
+        private void EmployeeGV_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                // التأكد من أن الصف الذي تم الضغط عليه هو صف صالح
+                if (e.RowIndex >= 0)
+                {
+                    // الحصول على البيانات من السطر المحدد
+                    DataGridViewRow row = EmployeeGV.Rows[e.RowIndex];
+
+                    // التأكد من أن السطر يحتوي على قيم قبل ملء الحقول
+                    if (row.Cells["EmpId"].Value != null && row.Cells["EmpName"].Value != null &&
+                        row.Cells["EmpSal"].Value != null && row.Cells["EmpAge"].Value != null &&
+                        row.Cells["EmpPhone"].Value != null && row.Cells["EmpPassword"].Value != null)
+                    {
+                        // ملء الحقول بالقيم من السطر المحدد
+                        tb1.Text = row.Cells["EmpId"].Value.ToString();      // Employee Id
+                        tb2.Text = row.Cells["EmpName"].Value.ToString();    // Employee Name
+                        tb3.Text = row.Cells["EmpAge"].Value.ToString();     // Employee Age
+                        tb4.Text = row.Cells["EmpSal"].Value.ToString();     // Employee Salary
+                        tb5.Text = row.Cells["EmpPhone"].Value.ToString();   // Phone Number
+
+                        // تعطيل خاصية PasswordChar لعرض كلمة المرور بشكل عادي
+                        tb6.PasswordChar = '\0'; // إلغاء إخفاء كلمة المرور بنجوم
+
+                        // عرض كلمة المرور بشكل عادي
+                        tb6.Clear();
+                        tb6.Text = row.Cells["EmpPassword"].Value.ToString(); // عرض كلمة المرور دون إخفاء
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // عرض رسالة خطأ إذا حدث شيء غير متوقع
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
 
 
         private string GetOriginalPassword(string empId)
@@ -347,39 +405,7 @@ namespace project_fo_3
             tb6.Clear();
         }
 
-        private void EmployeeGV_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            try
-            {
-                // التأكد من أن الصف الذي تم الضغط عليه هو صف صالح
-                if (e.RowIndex >= 0)
-                {
-                    // الحصول على البيانات من السطر المحدد
-                    DataGridViewRow row = EmployeeGV.Rows[e.RowIndex];
 
-                    // التأكد من أن السطر يحتوي على قيم قبل ملء الحقول
-                    if (row.Cells["EmpId"].Value != null && row.Cells["EmpName"].Value != null &&
-                        row.Cells["EmpSal"].Value != null && row.Cells["EmpAge"].Value != null &&
-                        row.Cells["EmpPhone"].Value != null && row.Cells["EmpPassword"].Value != null)
-                    {
-                        // ملء الحقول بالقيم من السطر المحدد
-                        tb1.Text = row.Cells["EmpId"].Value.ToString();      // Employee Id
-                        tb2.Text = row.Cells["EmpName"].Value.ToString();    // Employee Name
-                        tb3.Text = row.Cells["EmpAge"].Value.ToString();     // Employee Age
-                        tb4.Text = row.Cells["EmpSal"].Value.ToString();     // Employee Salary
-                        tb5.Text = row.Cells["EmpPhone"].Value.ToString();   // Phone Number
-
-                        // إخفاء كلمة المرور كنجوم في الحقل (tb6)
-                        tb6.Text = new string('*', row.Cells["EmpPassword"].Value.ToString().Length); // Hide password with stars
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                // عرض رسالة خطأ إذا حدث شيء غير متوقع
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
     }
 
 

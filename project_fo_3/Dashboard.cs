@@ -34,150 +34,336 @@ namespace project_fo_3
 
 
 
-
-        public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\YourFolder\PHARMACYOB.MDF;Integrated Security=True;");
-
-        //private void TestConnection()
-        //{
-        //    try
-        //    {
-        //        con.Open();
-        //        MessageBox.Show("Connection successful!");
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error: " + ex.Message);
-        //    }
-        //    finally
-        //    {
-        //        con.Close();
-        //    }
-        //}
-
-        //private void LoadData()
-        //{
-        //    // الاتصال بقاعدة البيانات للحصول على عدد الموظفين
-        //    string employeeQuery = "SELECT COUNT(*) FROM EmployeeTab1";
-        //    int employeeCount = ExecuteScalarQuery(employeeQuery);
-        //    guna2TextBox1.Text = employeeCount.ToString();
-        //    guna2TextBox1.BackColor = Color.LightBlue;  // تغيير اللون الخلفي للـ TextBox الأول
-
-        //    // الاتصال بقاعدة البيانات للحصول على عدد الشركات
-        //    string companyQuery = "SELECT COUNT(*) FROM CompanyTb1";
-        //    int companyCount = ExecuteScalarQuery(companyQuery);
-        //    guna2TextBox3.Text = companyCount.ToString();
-        //    guna2TextBox3.BackColor = Color.LightGreen;  // تغيير اللون الخلفي للـ TextBox الثاني
-
-        //    // الاتصال بقاعدة البيانات للحصول على إجمالي المبيعات
-        //    string sellsQuery = "SELECT SUM(TotalAmount) FROM BillsTb1";
-        //    int totalSells = ExecuteScalarQuery(sellsQuery);
-        //    guna2TextBox2.Text = totalSells.ToString();
-        //    guna2TextBox2.BackColor = Color.LightYellow;  // تغيير اللون الخلفي للـ TextBox الثالث
-        //}
-
-        //private void InitializeCheckBoxes()
-        //{
-        //    // تهيئة الألوان للخلفيات في الـ CheckBox أيضًا إذا رغبت في ذلك
-        //    CheckBox checkBoxEmployees = new CheckBox();
-        //    checkBoxEmployees.Location = new Point(20, 100);
-        //    checkBoxEmployees.Text = "Employees";
-        //    checkBoxEmployees.BackColor = Color.AliceBlue; // تغيير خلفية الشيك بوكس
-        //    checkBoxEmployees.CheckedChanged += new EventHandler(CheckBoxEmployees_CheckedChanged);
-
-        //    CheckBox checkBoxCompanies = new CheckBox();
-        //    checkBoxCompanies.Location = new Point(20, 150);
-        //    checkBoxCompanies.Text = "Companies";
-        //    checkBoxCompanies.BackColor = Color.Beige; // تغيير خلفية الشيك بوكس
-        //    checkBoxCompanies.CheckedChanged += new EventHandler(CheckBoxCompanies_CheckedChanged);
-
-        //    CheckBox checkBoxSells = new CheckBox();
-        //    checkBoxSells.Location = new Point(20, 200);
-        //    checkBoxSells.Text = "Sells";
-        //    checkBoxSells.BackColor = Color.Lavender; // تغيير خلفية الشيك بوكس
-        //    checkBoxSells.CheckedChanged += new EventHandler(CheckBoxSells_CheckedChanged);
-
-        //    // إضافة الـ CheckBoxes إلى النموذج
-        //    this.Controls.Add(checkBoxEmployees);
-        //    this.Controls.Add(checkBoxCompanies);
-        //    this.Controls.Add(checkBoxSells);
-        //}
+        // الاتصال بقاعدة البيانات
+        public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\PROJECT_OOP\FO_ORGANIZATION\PHARMACY-MANAGEMENT\PROJECT_FO_3\PHARMACYOB.MDF;Integrated Security=True;");
 
 
-        //// دالة لتنفيذ الاستعلام وإرجاع القيمة
-        //private int ExecuteScalarQuery(string query)
-        //{
-        //    int result = 0;
-        //    try
-        //    {
-        //        using (SqlConnection connection = new SqlConnection("YourConnectionString"))
-        //        {
-        //            connection.Open();
-        //            using (SqlCommand command = new SqlCommand(query, connection))
-        //            {
-        //                result = (int)command.ExecuteScalar();
-        //            }
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        MessageBox.Show("Error: " + ex.Message);
-        //    }
-        //    return result;
-        //}
 
-       
+        private void Dashboard_Load(object sender, EventArgs e)
+        {
+            UpdateCompanyCountLabel();
+            UpdateEmployeeCountLabel();
+            UpdateSalesTotalLabel();
+            LoadCustomerBillData();
+            CustomizeCustomerGridView();
+            LoadCustomerData();
+        }
+        private void CustomizeCustomerGridView()
+        {
+            // لون خلفية الـ Header
+            CustomerGV.EnableHeadersVisualStyles = false;
+            CustomerGV.ColumnHeadersDefaultCellStyle.BackColor = Color.DarkSlateBlue;
+            CustomerGV.ColumnHeadersDefaultCellStyle.ForeColor = Color.White;
+            CustomerGV.ColumnHeadersDefaultCellStyle.Font = new Font("Arial", 10, FontStyle.Bold);
 
-        //// دالة تحقق من التغيير في CheckBox للموظفين
-        //private void CheckBoxEmployees_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (((CheckBox)sender).Checked)
-        //    {
-        //        MessageBox.Show("Employee data selected.");
-        //    }
-        //}
+            // لون الصفوف العادية
+            CustomerGV.DefaultCellStyle.BackColor = Color.White;
+            CustomerGV.DefaultCellStyle.ForeColor = Color.Black;
 
-        //// دالة تحقق من التغيير في CheckBox للشركات
-        //private void CheckBoxCompanies_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (((CheckBox)sender).Checked)
-        //    {
-        //        MessageBox.Show("Company data selected.");
-        //    }
-        //}
+            // لون التحديد للصفوف والأعمدة
+            CustomerGV.DefaultCellStyle.SelectionBackColor = Color.DarkGreen; // خلفية الصف المحدد
+            CustomerGV.DefaultCellStyle.SelectionForeColor = Color.White; // لون النص في الصف المحدد
+        }
 
-        //// دالة تحقق من التغيير في CheckBox للمبيعات
-        //private void CheckBoxSells_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    if (((CheckBox)sender).Checked)
-        //    {
-        //        MessageBox.Show("Sales data selected.");
-        //    }
-        //}
+        private void UpdateCompanyCountLabel()
+        {
+            try
+            {
+                // فتح الاتصال بقاعدة البيانات
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
-        //// Employees TextBox
-        //private void guna2TextBox1_TextChanged(object sender, EventArgs e)
-        //{
-        //}
+                // استعلام للحصول على عدد الشركات
+                string query = "SELECT COUNT(*) FROM CompanyTb1";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    // تنفيذ الاستعلام واسترداد عدد الشركات
+                    int companyCount = Convert.ToInt32(cmd.ExecuteScalar());
 
-        //// Companies TextBox
-        //private void guna2TextBox3_TextChanged(object sender, EventArgs e)
-        //{
-        //}
+                    // تحديث النص في Label وإزالة أي نص سابق
+                    NumberOfEmp.Text = companyCount.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                // التعامل مع الأخطاء
+                MessageBox.Show($"Error fetching company count: {ex.Message}");
+            }
+            finally
+            {
+                // التأكد من إغلاق الاتصال إذا كان مفتوحًا
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
+        private void UpdateEmployeeCountLabel()
+        {
+            try
+            {
+                // فتح الاتصال بقاعدة البيانات
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
-        //// Sells TextBox
-        //private void guna2TextBox2_TextChanged(object sender, EventArgs e)
-        //{
-        //}
+                // استعلام للحصول على عدد الموظفين
+                string query = "SELECT COUNT(*) FROM EmployeeTab1";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    // تنفيذ الاستعلام واسترداد العدد
+                    int employeeCount = Convert.ToInt32(cmd.ExecuteScalar());
 
-        //private void Dashboard_Load(object sender, EventArgs e)
-        //{
-        //    LoadData();
-        //    InitializeCheckBoxes();
-        //}
+                    // تحديث النص في Label
+                    EmployeeNumber.Text = employeeCount.ToString();
+                }
+            }
+            catch (Exception ex)
+            {
+                // التعامل مع الأخطاء
+                MessageBox.Show($"Error fetching employee count: {ex.Message}");
+            }
+            finally
+            {
+                // التأكد من إغلاق الاتصال إذا كان مفتوحًا
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
+        // دالة لتحديث الإجمالي الإجمالي للمبيعات
+        private void UpdateSalesTotalLabel()
+        {
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                string query = "SELECT SUM(CAST(TotalSpent AS INT)) FROM CustomersBillsTb";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    object result = cmd.ExecuteScalar();
+                    int totalSales = result != DBNull.Value ? Convert.ToInt32(result) : 0;
+
+                    // تحديث الإجمالي في الـ Label
+                    SellsNumber.Text = $"{totalSales} EGY";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating total sales: {ex.Message}");
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
+        private void LoadCustomerBillData()
+        {
+            try
+            {
+                // فتح الاتصال
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                // استعلام لجلب بيانات العملاء والفواتير مع تاريخ الإصدار واسم الموظف ورقم الهاتف
+                string query = "SELECT CustomerId, CustomerName, PhoneNumber, TotalSpent, InvoiceDate, EmployeeName FROM CustomersBillsTb";
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(query, con);
+                DataTable dataTable = new DataTable();
+                dataAdapter.Fill(dataTable);
+
+                // عرض البيانات في الـ DataGridView
+                CustomerGV.DataSource = dataTable;
+
+                // تخصيص عرض الأعمدة يدويًا بعد ملء الـ DataGridView
+                CustomerGV.Columns["CustomerId"].Width = 100;
+                CustomerGV.Columns["CustomerName"].Width = 130;
+                CustomerGV.Columns["PhoneNumber"].Width = 110;  // تخصيص عرض عمود رقم الهاتف
+                CustomerGV.Columns["TotalSpent"].Width = 90;
+                CustomerGV.Columns["InvoiceDate"].Width = 120;
+                CustomerGV.Columns["EmployeeName"].Width = 140;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading customer bills: {ex.Message}");
+            }
+            finally
+            {
+                // غلق الاتصال
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+
+
+
+
+
+
+
+
+        private void CustomerGV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    // استخراج معلومات العميل من الجدول
+                    string customerId = CustomerGV.Rows[e.RowIndex].Cells["CustomerId"].Value.ToString();
+                    string customerName = CustomerGV.Rows[e.RowIndex].Cells["CustomerName"].Value.ToString();
+
+                    // تأكيد الحذف
+                    DialogResult result = MessageBox.Show(
+                        $"Are you sure you want to delete customer '{customerName}' with ID '{customerId}'?",
+                        "Delete Confirmation",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    // إذا وافق المستخدم على الحذف
+                    if (result == DialogResult.Yes)
+                    {
+                        // حذف العميل من قاعدة البيانات
+                        DeleteCustomerFromDatabase(customerId);
+
+                        // تحديث المجموع الإجمالي للمبيعات بعد الحذف
+                        UpdateSalesTotalLabel();
+
+                        // تحديث الجدول بعد الحذف
+                        LoadCustomerData();
+
+                        // عرض رسالة تأكيد
+                        MessageBox.Show("Customer record deleted successfully.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting customer: {ex.Message}");
+            }
+        }
+
+        // دالة لحذف العميل من قاعدة البيانات
+        private void DeleteCustomerFromDatabase(string customerId)
+        {
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                // استعلام لحذف العميل
+                string query = "DELETE FROM CustomersBillsTb WHERE CustomerId = @CustomerId";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@CustomerId", customerId);
+                    cmd.ExecuteNonQuery();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting customer from database: {ex.Message}");
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+        // دالة لتحميل البيانات إلى الجدول
+        private void LoadCustomerData()
+        {
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                // استعلام لتحميل البيانات من قاعدة البيانات
+                string query = "SELECT * FROM CustomersBillsTb";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, con);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
+
+                // تعيين البيانات إلى الـ DataGridView
+                CustomerGV.DataSource = dataTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading customer data: {ex.Message}");
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
+
+
+        private void CustomerGV_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            try
+            {
+                if (e.RowIndex >= 0)
+                {
+                    // استخراج معلومات العميل من الجدول
+                    string customerId = CustomerGV.Rows[e.RowIndex].Cells["CustomerId"].Value.ToString();
+                    string customerName = CustomerGV.Rows[e.RowIndex].Cells["CustomerName"].Value.ToString();
+
+                    // تأكيد الحذف
+                    DialogResult result = MessageBox.Show(
+                        $"Are you sure you want to delete customer '{customerName}' with ID '{customerId}'?",
+                        "Delete Confirmation",
+                        MessageBoxButtons.YesNo,
+                        MessageBoxIcon.Warning
+                    );
+
+                    // إذا وافق المستخدم على الحذف
+                    if (result == DialogResult.Yes)
+                    {
+                        // حذف العميل من قاعدة البيانات
+                        DeleteCustomerFromDatabase(customerId);
+
+                        // تحديث المجموع الإجمالي للمبيعات بعد الحذف
+                        UpdateSalesTotalLabel();
+
+                        // تحديث الجدول بعد الحذف
+                        LoadCustomerData();
+
+                        // عرض رسالة تأكيد
+                        MessageBox.Show("Customer record deleted successfully.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error deleting customer: {ex.Message}");
+            }
+        }
+
+   
     }
 
-
-
-  
 }
 

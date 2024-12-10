@@ -67,5 +67,5 @@ E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\projec
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.exe
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.pdb
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\bin\Debug\Guna.UI2.dll
-E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.csproj.AssemblyReference.cache
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.Dashboard.resources
+E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.csproj.AssemblyReference.cache
