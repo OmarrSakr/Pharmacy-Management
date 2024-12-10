@@ -29,9 +29,9 @@ namespace project_fo_3
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -177,7 +177,7 @@ namespace project_fo_3
             // 
             this.button1.BackColor = System.Drawing.Color.Green;
             this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.Location = new System.Drawing.Point(1212, 779);
+            this.button1.Location = new System.Drawing.Point(1212, 792);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(138, 57);
             this.button1.TabIndex = 34;
@@ -189,7 +189,7 @@ namespace project_fo_3
             // 
             this.button2.BackColor = System.Drawing.Color.Green;
             this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button2.Location = new System.Drawing.Point(679, 779);
+            this.button2.Location = new System.Drawing.Point(679, 793);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(138, 57);
             this.button2.TabIndex = 35;
@@ -242,26 +242,26 @@ namespace project_fo_3
             // 
             // BillingGV
             // 
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.White;
-            this.BillingGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.Firebrick;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.BillingGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
+            this.BillingGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Firebrick;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.BillingGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.BillingGV.ColumnHeadersHeight = 30;
             this.BillingGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.DarkGreen;
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.BillingGV.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkGreen;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.BillingGV.DefaultCellStyle = dataGridViewCellStyle6;
             this.BillingGV.GridColor = System.Drawing.Color.Firebrick;
             this.BillingGV.Location = new System.Drawing.Point(641, 119);
             this.BillingGV.Name = "BillingGV";
@@ -480,11 +480,11 @@ namespace project_fo_3
             this.ExpDate.Checked = true;
             this.ExpDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ExpDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.ExpDate.Location = new System.Drawing.Point(71, 696);
+            this.ExpDate.Location = new System.Drawing.Point(63, 697);
             this.ExpDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.ExpDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.ExpDate.Name = "ExpDate";
-            this.ExpDate.Size = new System.Drawing.Size(275, 36);
+            this.ExpDate.Size = new System.Drawing.Size(295, 36);
             this.ExpDate.TabIndex = 64;
             this.ExpDate.Value = new System.DateTime(2024, 12, 3, 21, 18, 8, 333);
             this.ExpDate.ValueChanged += new System.EventHandler(this.ExpDate_ValueChanged_1);
@@ -495,7 +495,7 @@ namespace project_fo_3
             this.TimingLabel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
             this.TimingLabel.Font = new System.Drawing.Font("Segoe UI Semibold", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TimingLabel.ForeColor = System.Drawing.Color.Black;
-            this.TimingLabel.Location = new System.Drawing.Point(1109, 539);
+            this.TimingLabel.Location = new System.Drawing.Point(1127, 539);
             this.TimingLabel.Name = "TimingLabel";
             this.TimingLabel.Size = new System.Drawing.Size(56, 20);
             this.TimingLabel.TabIndex = 65;
@@ -505,7 +505,7 @@ namespace project_fo_3
             // 
             this.CustomerInfo.BackColor = System.Drawing.Color.Green;
             this.CustomerInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.CustomerInfo.Location = new System.Drawing.Point(145, 781);
+            this.CustomerInfo.Location = new System.Drawing.Point(155, 794);
             this.CustomerInfo.Name = "CustomerInfo";
             this.CustomerInfo.Size = new System.Drawing.Size(138, 57);
             this.CustomerInfo.TabIndex = 66;
@@ -579,7 +579,7 @@ namespace project_fo_3
             // 
             this.clearbutton.BackColor = System.Drawing.Color.Green;
             this.clearbutton.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.clearbutton.Location = new System.Drawing.Point(947, 780);
+            this.clearbutton.Location = new System.Drawing.Point(954, 792);
             this.clearbutton.Name = "clearbutton";
             this.clearbutton.Size = new System.Drawing.Size(138, 57);
             this.clearbutton.TabIndex = 73;

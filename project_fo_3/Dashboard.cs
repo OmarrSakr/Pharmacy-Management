@@ -167,6 +167,7 @@ namespace project_fo_3
                 }
             }
         }
+        // دالة لتحميل بيانات فواتير العملاء
         private void LoadCustomerBillData()
         {
             try
@@ -177,8 +178,8 @@ namespace project_fo_3
                     con.Open();
                 }
 
-                // استعلام لجلب بيانات العملاء والفواتير مع تاريخ الإصدار واسم الموظف ورقم الهاتف
-                string query = "SELECT CustomerId, CustomerName, PhoneNumber, TotalSpent, InvoiceDate, EmployeeName FROM CustomersBillsTb";
+                // استعلام لجلب بيانات العملاء والفواتير مع تاريخ الإصدار واسم الموظف ورقم الهاتف والعنوان
+                string query = "SELECT CustomerId, CustomerName, CustomerAddress, PhoneNumber, TotalSpent, InvoiceDate, EmployeeName FROM CustomersBillsTb";
                 SqlDataAdapter dataAdapter = new SqlDataAdapter(query, con);
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
@@ -188,11 +189,12 @@ namespace project_fo_3
 
                 // تخصيص عرض الأعمدة يدويًا بعد ملء الـ DataGridView
                 CustomerGV.Columns["CustomerId"].Width = 100;
-                CustomerGV.Columns["CustomerName"].Width = 130;
-                CustomerGV.Columns["PhoneNumber"].Width = 110;  // تخصيص عرض عمود رقم الهاتف
-                CustomerGV.Columns["TotalSpent"].Width = 90;
-                CustomerGV.Columns["InvoiceDate"].Width = 120;
-                CustomerGV.Columns["EmployeeName"].Width = 140;
+                CustomerGV.Columns["CustomerName"].Width = 150;
+                CustomerGV.Columns["CustomerAddress"].Width = 150;  // تخصيص عرض عمود العنوان
+                CustomerGV.Columns["PhoneNumber"].Width = 110;      // تخصيص عرض عمود رقم الهاتف
+                CustomerGV.Columns["TotalSpent"].Width = 100;
+                CustomerGV.Columns["InvoiceDate"].Width = 130;
+                CustomerGV.Columns["EmployeeName"].Width = 150;
             }
             catch (Exception ex)
             {
@@ -208,10 +210,37 @@ namespace project_fo_3
             }
         }
 
+        // دالة لتحميل البيانات إلى الجدول
+        private void LoadCustomerData()
+        {
+            try
+            {
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
+                // استعلام لتحميل البيانات من قاعدة البيانات (يشمل CustomerAddress)
+                string query = "SELECT CustomerId, CustomerName, CustomerAddress, PhoneNumber, TotalSpent, InvoiceDate, EmployeeName FROM CustomersBillsTb";
+                SqlDataAdapter adapter = new SqlDataAdapter(query, con);
+                DataTable dataTable = new DataTable();
+                adapter.Fill(dataTable);
 
-
-
+                // تعيين البيانات إلى الـ DataGridView
+                CustomerGV.DataSource = dataTable;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading customer data: {ex.Message}");
+            }
+            finally
+            {
+                if (con.State == ConnectionState.Open)
+                {
+                    con.Close();
+                }
+            }
+        }
 
 
 
@@ -225,10 +254,11 @@ namespace project_fo_3
                     // استخراج معلومات العميل من الجدول
                     string customerId = CustomerGV.Rows[e.RowIndex].Cells["CustomerId"].Value.ToString();
                     string customerName = CustomerGV.Rows[e.RowIndex].Cells["CustomerName"].Value.ToString();
+                    string customerAddress = CustomerGV.Rows[e.RowIndex].Cells["CustomerAddress"].Value.ToString(); // إضافة العنوان
 
                     // تأكيد الحذف
                     DialogResult result = MessageBox.Show(
-                        $"Are you sure you want to delete customer '{customerName}' with ID '{customerId}'?",
+                        $"Are you sure you want to delete customer '{customerName}' with ID '{customerId}' and address '{customerAddress}'?",
                         "Delete Confirmation",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Warning
@@ -257,7 +287,9 @@ namespace project_fo_3
             }
         }
 
+
         // دالة لحذف العميل من قاعدة البيانات
+      
         private void DeleteCustomerFromDatabase(string customerId)
         {
             try
@@ -288,37 +320,9 @@ namespace project_fo_3
             }
         }
 
+
         // دالة لتحميل البيانات إلى الجدول
-        private void LoadCustomerData()
-        {
-            try
-            {
-                if (con.State == ConnectionState.Closed)
-                {
-                    con.Open();
-                }
-
-                // استعلام لتحميل البيانات من قاعدة البيانات
-                string query = "SELECT * FROM CustomersBillsTb";
-                SqlDataAdapter adapter = new SqlDataAdapter(query, con);
-                DataTable dataTable = new DataTable();
-                adapter.Fill(dataTable);
-
-                // تعيين البيانات إلى الـ DataGridView
-                CustomerGV.DataSource = dataTable;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading customer data: {ex.Message}");
-            }
-            finally
-            {
-                if (con.State == ConnectionState.Open)
-                {
-                    con.Close();
-                }
-            }
-        }
+       
 
 
         private void CustomerGV_CellContentClick(object sender, DataGridViewCellMouseEventArgs e)
@@ -330,10 +334,11 @@ namespace project_fo_3
                     // استخراج معلومات العميل من الجدول
                     string customerId = CustomerGV.Rows[e.RowIndex].Cells["CustomerId"].Value.ToString();
                     string customerName = CustomerGV.Rows[e.RowIndex].Cells["CustomerName"].Value.ToString();
+                    string customerAddress = CustomerGV.Rows[e.RowIndex].Cells["CustomerAddress"].Value.ToString(); // إضافة العنوان
 
                     // تأكيد الحذف
                     DialogResult result = MessageBox.Show(
-                        $"Are you sure you want to delete customer '{customerName}' with ID '{customerId}'?",
+                        $"Are you sure you want to delete customer '{customerName}' with ID '{customerId}' and address '{customerAddress}'?",
                         "Delete Confirmation",
                         MessageBoxButtons.YesNo,
                         MessageBoxIcon.Warning
@@ -362,7 +367,7 @@ namespace project_fo_3
             }
         }
 
-   
+
     }
 
 }

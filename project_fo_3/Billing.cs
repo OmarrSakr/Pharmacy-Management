@@ -1171,7 +1171,6 @@ namespace project_fo_3
 
 
 
-        // زر إضافة معلومات العميل
         private void CustomerInfo_Click(object sender, EventArgs e)
         {
             try
@@ -1237,6 +1236,7 @@ namespace project_fo_3
                 string customerIdText = CustomerIdLabel.Text;   // النص الخاص بـ ID
                 string customerNameText = CustomerNameLabel.Text;   // النص الخاص بـ اسم الزبون
                 string customerPhoneText = CustomerPhoneLabel.Text;  // النص الخاص برقم الهاتف
+                string customerAddressText = CustomerAddressLabel.Text; // النص الخاص بعنوان العميل
                 string priceAdText = PriceADLabel.Text;         // النص الخاص بالسعر النهائي
                 string EmployeeNameText = EmployeeLabel.Text;      // اسم الموظف
                 DateTime invoiceDate = DateTime.Now;           // تاريخ إصدار الفاتورة
@@ -1246,21 +1246,23 @@ namespace project_fo_3
                 string customerName = ExtractValue(customerNameText); // "Omar Hussein abdallah"
                 string employeeName = ExtractEmployeeName(EmployeeNameText);  // اسم الموظف
                 string customerPhone = ExtractCustomerPhone(customerPhoneText);  // رقم الهاتف
+                string customerAddress = ExtractValue(customerAddressText); // العنوان
                 decimal totalAmount;
+
 
                 // محاولة تحويل النص الخاص بالسعر النهائي إلى عدد عشري
                 if (decimal.TryParse(ExtractNumericValue(priceAdText), out totalAmount))
                 {
                     // حفظ البيانات في قاعدة البيانات
-                    SaveDetailsToDatabase(customerId, customerName, customerPhone, (int)totalAmount, employeeName, invoiceDate);
+                    SaveDetailsToDatabase(customerId, customerName, customerPhone, customerAddress, totalAmount, employeeName, invoiceDate);
 
-                    // عرض رسالة تأكيد
-                    MessageBox.Show($"Customer Details Saved:\nID: {customerId}\nName: {customerName}\nPhone: {customerPhone}\nTotal Amount: {totalAmount} EGY");
+                    // عرض رسالة تأكيد بعد الحفظ
+                    MessageBox.Show($"Customer Details Saved:\nID: {customerId}\nName: {customerName}\nPhone: {customerPhone}\nTotal Amount: {totalAmount} EGY\nAddress: {customerAddress}");
                 }
                 else
                 {
                     // إذا كانت القيمة غير صحيحة
-                    MessageBox.Show("Invalid total amount.");
+                    MessageBox.Show("Invalid total amount. Please enter a valid numeric value.");
                 }
             }
             catch (Exception ex)
@@ -1268,6 +1270,7 @@ namespace project_fo_3
                 MessageBox.Show($"Error adding customer info: {ex.Message}");
             }
         }
+
 
 
 
@@ -1531,8 +1534,6 @@ namespace project_fo_3
         private void ResetForm()
         {
             // مسح جميع الحقول والبيانات المعروضة في الواجهة
-            PriceBDLabel.Text = $"Price B.D: 0 EGP";
-            PriceADLabel.Text = $"Price A.D: 0 EGP";
             Discounttext.Clear();
             tb1.Clear();
             CustomerNameLabel.Text = $"Customer Name:";
@@ -1583,7 +1584,7 @@ namespace project_fo_3
 
                         // إعادة تخصيص DataGridView بعد حذف الصف
                         CustomizeDataGridView();
-
+                        UpdateTotalAmount();
                         MessageBox.Show($"{medName} has been removed from the bill and restored to stock.");
                     }
                     catch (Exception ex)
@@ -1630,8 +1631,7 @@ namespace project_fo_3
 
 
 
-        // دالة لحفظ بيانات العميل في قاعدة البيانات
-        private void SaveDetailsToDatabase(string customerId, string customerName, string phoneNumber, int totalAmount, string employeeName, DateTime invoiceDate)
+        private void SaveDetailsToDatabase(string customerId, string customerName, string phoneNumber, string customerAddress, decimal totalAmount, string employeeName, DateTime invoiceDate)
         {
             try
             {
@@ -1650,8 +1650,8 @@ namespace project_fo_3
 
                     if (exists > 0)
                     {
-                        // إذا كان العميل موجودًا بالفعل، تحديث الإجمالي
-                        string updateQuery = "UPDATE CustomersBillsTb SET TotalSpent = TotalSpent + @TotalAmount, EmployeeName = @EmployeeName, InvoiceDate = @InvoiceDate, PhoneNumber = @PhoneNumber WHERE CustomerId = @CustomerId";
+                        // إذا كان العميل موجودًا بالفعل، تحديث الإجمالي والعنوان
+                        string updateQuery = "UPDATE CustomersBillsTb SET TotalSpent = TotalSpent + @TotalAmount, EmployeeName = @EmployeeName, InvoiceDate = @InvoiceDate, PhoneNumber = @PhoneNumber, CustomerAddress = @CustomerAddress WHERE CustomerId = @CustomerId";
                         using (SqlCommand updateCmd = new SqlCommand(updateQuery, con))
                         {
                             updateCmd.Parameters.AddWithValue("@TotalAmount", totalAmount);
@@ -1659,13 +1659,14 @@ namespace project_fo_3
                             updateCmd.Parameters.AddWithValue("@EmployeeName", employeeName);
                             updateCmd.Parameters.AddWithValue("@InvoiceDate", invoiceDate);
                             updateCmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+                            updateCmd.Parameters.AddWithValue("@CustomerAddress", customerAddress);
                             updateCmd.ExecuteNonQuery();
                         }
                     }
                     else
                     {
-                        // إذا لم يكن العميل موجودًا، إضافة عميل جديد
-                        string insertQuery = "INSERT INTO CustomersBillsTb (CustomerId, CustomerName, PhoneNumber, TotalSpent, EmployeeName, InvoiceDate) VALUES (@CustomerId, @CustomerName, @PhoneNumber, @TotalAmount, @EmployeeName, @InvoiceDate)";
+                        // إذا لم يكن العميل موجودًا، إضافة عميل جديد مع العنوان
+                        string insertQuery = "INSERT INTO CustomersBillsTb (CustomerId, CustomerName, PhoneNumber, TotalSpent, EmployeeName, InvoiceDate, CustomerAddress) VALUES (@CustomerId, @CustomerName, @PhoneNumber, @TotalAmount, @EmployeeName, @InvoiceDate, @CustomerAddress)";
                         using (SqlCommand insertCmd = new SqlCommand(insertQuery, con))
                         {
                             insertCmd.Parameters.AddWithValue("@CustomerId", customerId);
@@ -1674,6 +1675,7 @@ namespace project_fo_3
                             insertCmd.Parameters.AddWithValue("@TotalAmount", totalAmount);
                             insertCmd.Parameters.AddWithValue("@EmployeeName", employeeName);
                             insertCmd.Parameters.AddWithValue("@InvoiceDate", invoiceDate);
+                            insertCmd.Parameters.AddWithValue("@CustomerAddress", customerAddress);
                             insertCmd.ExecuteNonQuery();
                         }
                     }
@@ -1695,6 +1697,8 @@ namespace project_fo_3
                 }
             }
         }
+
+
 
 
 
@@ -1812,29 +1816,30 @@ namespace project_fo_3
 
         private void SaveInvoice()
         {
-            // التأكد من أن النص يحتوي على قيمة قابلة للتحويل إلى عدد صحيح
             string customerName = CustomerNameLabel.Text; // اسم العميل
             string employeeNameText = EmployeeLabel.Text; // النص الخاص بـ Employee Name
             string employeeName = ExtractEmployeeName(employeeNameText); // استخراج اسم الموظف
             string customerPhoneText = CustomerPhoneLabel.Text; // النص الخاص بـ Customer Phone
             string customerPhone = ExtractCustomerPhone(customerPhoneText); // استخراج رقم الهاتف
-            int invoiceTotal;
+            string customerAddress = CustomerAddressLabel.Text; // استخراج العنوان
+            decimal invoiceTotal;
 
-            // محاولة تحويل النص إلى عدد صحيح
-            if (int.TryParse(PriceADLabel.Text, out invoiceTotal))
+            // محاولة تحويل النص إلى عدد عشري (decimal)
+            if (decimal.TryParse(PriceADLabel.Text, out invoiceTotal))
             {
                 // حفظ بيانات العميل والفاتورة مع اسم الموظف وتاريخ الفاتورة ورقم الهاتف
-                SaveDetailsToDatabase(customerName, customerName, customerPhone, invoiceTotal, employeeName, DateTime.Now);
+                SaveDetailsToDatabase(customerName, customerName, customerPhone, customerAddress, invoiceTotal, employeeName, DateTime.Now);
 
                 // رسالة تأكيد
                 MessageBox.Show($"Invoice saved for {customerName} with total {invoiceTotal} EGY");
             }
             else
             {
-                // إذا كانت القيمة غير قابلة للتحويل إلى عدد صحيح
+                // إذا كانت القيمة غير قابلة للتحويل إلى عدد عشري
                 MessageBox.Show("Invalid total amount.");
             }
         }
+
 
 
 
