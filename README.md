@@ -10,9 +10,8 @@
   <img src="https://github.com/user-attachments/assets/acdec246-0486-48c8-b64c-b7950648de85" alt="Screenshot 7"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/db3a0ee8-4b64-45a9-8cb8-29e26bbe9f30" alt="Screenshot 8"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/a86a5c7c-6477-47a5-8fcd-8115eb9e581a" alt="Screenshot 9"style="width: 24%;" />
-  <img src="" alt="Screenshot 10"style="width: 48%;" />
-</div>
-
+  <img src="https://github.com/user-attachments/assets/9f279b74-f977-41c8-8026-63823e57992e" alt="Screenshot 10"style="width: 48%;" />
+</d>
 
 A `static desktop application` built using `C#`, designed for managing pharmacy operations. It features
 multiple modules to handle various aspects of pharmacy management, including Employees
