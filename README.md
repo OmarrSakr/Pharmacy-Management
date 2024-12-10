@@ -8,9 +8,12 @@
   <img src="https://github.com/user-attachments/assets/fd46f1b4-daa8-42a9-976b-86ada5dcea99" alt="Screenshot 5"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/c6a0ba51-9616-41cb-83a3-58518a628acb" alt="Screenshot 6"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/acdec246-0486-48c8-b64c-b7950648de85" alt="Screenshot 7"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/12a0cb9d-a85b-46b9-86ac-65326f0271a0" alt="Screenshot 8"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/f7e681be-5c63-4e7e-8676-01a734b0ed0a" alt="Screenshot 9"style="width: 24%;" />
+  <img src="https://github.com/user-attachments/assets/45c8f918-02a1-42e5-bcf9-59523ea96a93" alt="Screenshot 8"style="width: 24%;" />
+  <img src="https://github.com/user-attachments/assets/a9b11e29-5bdb-43f8-94b5-2cb9cf1b8bf2" alt="Screenshot 9"style="width: 24%;" />
+  <img src="https://github.com/user-attachments/assets/5f10bf6d-0fd9-493f-abed-ac33664d5fdc" alt="Screenshot 10"style="width: 48%;" />
 </div>
+
+
 
 A `static desktop application` built using `C#`, designed for managing pharmacy operations. It features
 multiple modules to handle various aspects of pharmacy management, including Employees
