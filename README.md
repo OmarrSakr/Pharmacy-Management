@@ -1,5 +1,6 @@
 
-# Pharmacy Management ( C# ) 💊
+
+# Screenshots
 
 <div style="display: flex; justify-content: space-between; margin-bottom:2%;">
   <img src="https://github.com/user-attachments/assets/c5412f6f-df6c-4cb4-a8f0-657f66a05f35" alt="Screenshot 1" style="width: 24%; margin-right: 1%;" />
@@ -12,7 +13,9 @@
   <img src="https://github.com/user-attachments/assets/a86a5c7c-6477-47a5-8fcd-8115eb9e581a" alt="Screenshot 9"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/9f279b74-f977-41c8-8026-63823e57992e" alt="Screenshot 10"style="width: 48%;" />
 </d>
-
+  
+# Pharmacy Management ( C# ) 💊
+  
 A `static desktop application` built using `C#`, designed for managing pharmacy operations. It features
 multiple modules to handle various aspects of pharmacy management, including Employees
 management, billing, medicine tracking, and Companies records.
