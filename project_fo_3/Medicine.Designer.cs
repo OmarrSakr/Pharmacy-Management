@@ -352,7 +352,7 @@ namespace project_fo_3
             this.ExpDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.ExpDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.ExpDate.Name = "ExpDate";
-            this.ExpDate.Size = new System.Drawing.Size(290, 36);
+            this.ExpDate.Size = new System.Drawing.Size(305, 36);
             this.ExpDate.TabIndex = 30;
             this.ExpDate.Value = new System.DateTime(2024, 12, 3, 21, 18, 8, 333);
             // 
@@ -374,7 +374,7 @@ namespace project_fo_3
             this.SelectCompany.FormattingEnabled = true;
             this.SelectCompany.Location = new System.Drawing.Point(68, 420);
             this.SelectCompany.Name = "SelectCompany";
-            this.SelectCompany.Size = new System.Drawing.Size(290, 28);
+            this.SelectCompany.Size = new System.Drawing.Size(305, 28);
             this.SelectCompany.TabIndex = 50;
             this.SelectCompany.Text = "Select Company";
             this.SelectCompany.SelectedIndexChanged += new System.EventHandler(this.SelectCompany_SelectedIndexChanged);

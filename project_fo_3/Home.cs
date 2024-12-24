@@ -55,10 +55,7 @@ namespace project_fo_3
             back.ShowDialog();
         }
 
-        private void Home_Load(object sender, EventArgs e)
-        {
 
-        }
 
 
         private void DashBoard_Click(object sender, EventArgs e)

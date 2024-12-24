@@ -167,35 +167,51 @@ namespace project_fo_3
                     return;
                 }
 
-                con.Open();
+                // نافذة تأكيد قبل الحذف
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this company?",
+                                                      "Confirm Deletion",
+                                                      MessageBoxButtons.YesNo,
+                                                      MessageBoxIcon.Warning);
 
-                // استعلام الحذف (Delete)
-                string query = "DELETE FROM CompanyTb1 WHERE CompId = @CompId";
-
-                // إعداد الأمر مع المعلمات
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                if (result == DialogResult.Yes)
                 {
-                    cmd.Parameters.AddWithValue("@CompId", tb1.Text);
+                    // فتح الاتصال بقاعدة البيانات
+                    if (con.State == ConnectionState.Closed)
+                        con.Open();
 
-                    int rowsAffected = cmd.ExecuteNonQuery();
+                    // استعلام الحذف
+                    string query = "DELETE FROM CompanyTb1 WHERE CompId = @CompId";
 
-                    if (rowsAffected > 0)
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        // مسح الحقول بعد إضافة البيانات
-                        tb1.Clear();
-                        tb2.Clear();
-                        tb3.Clear();
-                        tb4.Clear();
+                        cmd.Parameters.AddWithValue("@CompId", tb1.Text.Trim());
 
-                        MessageBox.Show("Company Successfully Deleted");
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // تفريغ الحقول بعد نجاح الحذف
+                            tb1.Clear();
+                            tb2.Clear();
+                            tb3.Clear();
+                            tb4.Clear();
+
+                            MessageBox.Show("Company Successfully Deleted");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Company not found.");
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show("Company not found.");
-                    }
+
+                    // تحديث DataGridView بعد الحذف
+                    PopulateGrid(CompanyGV);
                 }
-
-                PopulateGrid(CompanyGV);  // تحديث البيانات في DataGridView
+                else
+                {
+                    // إذا اختار "No"، إلغاء العملية
+                    MessageBox.Show("Deletion Cancelled.");
+                }
             }
             catch (Exception ex)
             {
@@ -203,9 +219,11 @@ namespace project_fo_3
             }
             finally
             {
-                con.Close();
+                if (con.State == ConnectionState.Open)
+                    con.Close();
             }
         }
+
 
         public void PopulateGrid(DataGridView CompanyGV)
         {

@@ -230,42 +230,57 @@ namespace project_fo_3
             {
                 if (string.IsNullOrEmpty(MedicineTb.Text))
                 {
-                    MessageBox.Show("Please enter the Medicine Name to delete.");
+                    MessageBox.Show("Please select a medicine to delete.");
                     return;
                 }
 
-                con.Open();
+                // نافذة تأكيد قبل الحذف
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this medicine?",
+                                                      "Confirm Deletion",
+                                                      MessageBoxButtons.YesNo,
+                                                      MessageBoxIcon.Warning);
 
-                // استعلام الحذف (Delete)
-                string query = "DELETE FROM MedicineTb1 WHERE MedName = @MedName";
-
-                // إعداد الأمر مع المعلمات
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                if (result == DialogResult.Yes)
                 {
-                    cmd.Parameters.AddWithValue("@MedName", MedicineTb.Text.Trim()); // تأكد من إزالة المسافات الزائدة
+                    // فتح الاتصال بقاعدة البيانات
+                    if (con.State == ConnectionState.Closed)
+                        con.Open();
 
-                    int rowsAffected = cmd.ExecuteNonQuery();
+                    // استعلام الحذف
+                    string query = "DELETE FROM MedicineTb1 WHERE MedName = @MedName";
 
-                    if (rowsAffected > 0)
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        // مسح الحقول بعد الحذف
-                        MedicineTb.Clear();
-                        BpriceTb.Clear();
-                        SpriceTb.Clear();
-                        QtTb.Clear();
-                        ExpDate.Value = DateTime.Now;
-                        SelectCompany.Text = "Select Company"; // تعيين النص الافتراضي بعد اختيار شركة
+                        cmd.Parameters.AddWithValue("@MedName", MedicineTb.Text.Trim());
 
-                        MessageBox.Show("Medicine Successfully Deleted");
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // إفراغ الحقول بعد الحذف
+                            MedicineTb.Clear();
+                            BpriceTb.Clear();
+                            SpriceTb.Clear();
+                            QtTb.Clear();
+                            ExpDate.Value = DateTime.Now;
+                            SelectCompany.Text = "Select Company"; // إعادة النص الافتراضي
+
+                            MessageBox.Show("Medicine Successfully Deleted");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Medicine not found.");
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show("Medicine not found.");
-                    }
+
+                    // تحديث البيانات في DataGridView
+                    PopulateGrid(MedicineGV);
                 }
-
-                // تحديث البيانات في DataGridView
-                PopulateGrid(MedicineGV);
+                else
+                {
+                    // إذا اختار "No"، إلغاء العملية
+                    MessageBox.Show("Deletion Cancelled.");
+                }
             }
             catch (Exception ex)
             {
@@ -273,11 +288,12 @@ namespace project_fo_3
             }
             finally
             {
-                // التأكد من إغلاق الاتصال إذا كان مفتوحًا
+                // إغلاق الاتصال إذا كان مفتوحًا
                 if (con.State == System.Data.ConnectionState.Open)
                     con.Close();
             }
         }
+
 
 
 
@@ -367,6 +383,7 @@ namespace project_fo_3
             BpriceTb.Clear();
             SpriceTb.Clear();
             QtTb.Clear();
+            SelectCompany.Text = "Select Company";
             ExpDate.Value = DateTime.Now;
         }
 

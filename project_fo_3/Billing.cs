@@ -480,6 +480,9 @@ namespace project_fo_3
                 PopulateGrid(BillingGV); // تحميل بيانات الفواتير
                 PriceADLabel.Text = $"Price A.D"; // أو القيمة الافتراضية
                 LoadEmployeeNames(); // تحميل أسماء الموظفين في ComboBox
+                LoadPhoneNumbers(); // لتحميل أرقام العملاء
+                LoadPhoneNumbersToComboBox();
+
             }
             catch (Exception ex)
             {
@@ -495,7 +498,7 @@ namespace project_fo_3
                 if (con.State == ConnectionState.Closed)
                     con.Open();
 
-                string query = "SELECT EmpId, EmpName FROM EmployeeTab1";
+                string query = "SELECT EmpId, EmpName FROM EmployeeTb1";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -551,7 +554,7 @@ namespace project_fo_3
                 {
                     con.Open();
 
-                    string query = "SELECT EmpId FROM EmployeeTab1 WHERE EmpName = @EmpName";
+                    string query = "SELECT EmpId FROM EmployeeTb1 WHERE EmpName = @EmpName";
 
                     using (SqlCommand cmd = new SqlCommand(query, con))
                     {
@@ -883,7 +886,7 @@ namespace project_fo_3
             CustomerIdLabel.Text = $"Customer Id:";
             TimingLabel.Text = $"Timing:";
             gunaLineTextBox3.Clear();
-            gunaLineTextBox2.Clear();
+            gunaLineTextBox2.Text = "";
             gunaLineTextBox1.Clear();
         }
 
@@ -1185,16 +1188,25 @@ namespace project_fo_3
                     return;
                 }
 
+                // التحقق إذا كان الـ CustomerIdLabel يحتوي فقط على "Customer ID:"
+                if (CustomerIdLabel.Text.Trim() == "Customer Id:")
+                {
+                    // إذا كان الـ CustomerIdLabel فارغ، توليد ID جديد
+                    string generatedCustomerId = Guid.NewGuid().ToString("N").Substring(0, 8);
+                    CustomerIdLabel.Text = $"Customer Id: {generatedCustomerId}";
+                }
+                else
+                {
+                    // إذا كان الـ CustomerIdLabel يحتوي على رقم معرف مسبقًا، لا تولد ID جديد
+                    Console.WriteLine("Customer Id already exists, no new ID generated.");
+                }
+
                 // إضافة بيانات العميل في الـ Labels بعد الضغط على الزر
                 CustomerNameLabel.Text = $"Customer Name: {gunaLineTextBox3.Text}";
                 CustomerPhoneLabel.Text = $"Phone: {gunaLineTextBox2.Text}";
                 CustomerAddressLabel.Text = $"Address: {gunaLineTextBox1.Text}";
                 TimingLabel.Text = $"Date: {ExpDate.Value.ToString("dddd, dd MMMM yyyy hh:mm tt")}";
 
-                // توليد Customer ID باستخدام GUID واستخراج أول 8 خانات
-                string generatedCustomerId = Guid.NewGuid().ToString("N").Substring(0, 8);
-                // عرض الرقم في CustomerIdLabel
-                CustomerIdLabel.Text = $"Customer ID: {generatedCustomerId}";
                 // تغيير اللون أو أي تعديلات أخرى إذا لزم الأمر
                 CustomerIdLabel.ForeColor = Color.Black;
                 CustomerIdLabel.BackColor = Color.FromArgb(255, 128, 0);
@@ -1217,7 +1229,7 @@ namespace project_fo_3
                     EmployeeLabel.Text = $"Employee Name: {selectedItem.Text}";
 
                     // عرض EmployeeId الخاص بالموظف
-                    EmployeeIdLabel.Text = $"Employee ID: {selectedItem.Value}";
+                    EmployeeIdLabel.Text = $"Employee Id: {selectedItem.Value}";
                 }
                 else
                 {
@@ -1227,7 +1239,7 @@ namespace project_fo_3
 
                 // **إفراغ الـ TextBox بعد إضافة معلومات العميل**
                 gunaLineTextBox3.Clear();  // مسح اسم العميل
-                gunaLineTextBox2.Clear();  // مسح رقم التليفون
+                gunaLineTextBox2.Text = "";  // مسح رقم التليفون
                 gunaLineTextBox1.Clear();  // مسح العنوان
                 SelectEmployee.SelectedIndex = -1; // مسح اختيار الموظف
                 SelectEmployee.Text = "Select Employee"; // إعادة النص إلى "Select Employee"
@@ -1239,7 +1251,7 @@ namespace project_fo_3
                 string customerAddressText = CustomerAddressLabel.Text; // النص الخاص بعنوان العميل
                 string priceAdText = PriceADLabel.Text;         // النص الخاص بالسعر النهائي
                 string EmployeeNameText = EmployeeLabel.Text;      // اسم الموظف
-                DateTime invoiceDate = DateTime.Now;           // تاريخ إصدار الفاتورة
+                DateTime invoiceDate = ExpDate.Value;           // تاريخ إصدار الفاتورة
 
                 // استخراج القيم فقط من النصوص
                 string customerId = ExtractValue(customerIdText);    // "5b9d9828"
@@ -1248,7 +1260,6 @@ namespace project_fo_3
                 string customerPhone = ExtractCustomerPhone(customerPhoneText);  // رقم الهاتف
                 string customerAddress = ExtractValue(customerAddressText); // العنوان
                 decimal totalAmount;
-
 
                 // محاولة تحويل النص الخاص بالسعر النهائي إلى عدد عشري
                 if (decimal.TryParse(ExtractNumericValue(priceAdText), out totalAmount))
@@ -1270,6 +1281,13 @@ namespace project_fo_3
                 MessageBox.Show($"Error adding customer info: {ex.Message}");
             }
         }
+
+
+
+    
+
+
+
 
 
 
@@ -1544,7 +1562,7 @@ namespace project_fo_3
             CustomerIdLabel.Text = $"Customer Id:";
             TimingLabel.Text = $"Timing:";
             gunaLineTextBox3.Clear();
-            gunaLineTextBox2.Clear();
+            gunaLineTextBox2.Text = "";
             gunaLineTextBox1.Clear();
             SelectEmployee.Text = "Select Employee";
             MediComboCb.Text = "Select Medicine";
@@ -1840,11 +1858,186 @@ namespace project_fo_3
             }
         }
 
+        private void FillCustomerDataByPhoneNumber(string phoneNumber)
+        {
+            try
+            {
+                // التأكد من أن رقم الهاتف غير فارغ
+                if (string.IsNullOrEmpty(phoneNumber)) return;
+
+                con.Open();
+
+                // استعلام لجلب بيانات العميل بناءً على رقم الهاتف
+                string query = "SELECT CustomerId, CustomerName, CustomerAddress FROM CustomersBillsTb WHERE PhoneNumber = @PhoneNumber";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        // إذا تم العثور على العميل، يتم تعبئة الحقول
+                        string customerId = reader["CustomerId"].ToString();
+                        string customerName = reader["CustomerName"].ToString();
+                        string customerAddress = reader["CustomerAddress"].ToString();
+
+                        CustomerIdLabel.Text = $"Customer Id: {customerId}"; // تنسيق النص للـ Label
+                        gunaLineTextBox3.Text = customerName; // تعبئة اسم العميل
+                        gunaLineTextBox1.Text = customerAddress; // تعبئة عنوان العميل
+
+                        // إضافة رسالة تأكيد
+                        //MessageBox.Show("Customer data has been successfully loaded.");
+                    }
+                    else
+                    {
+                        // إذا لم يتم العثور على العميل
+                        MessageBox.Show("This phone number does not exist in the database. You can continue entering new data.");
+                    }
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
 
 
+        private void gunaLineTextBox2_Leave(object sender, EventArgs e)
+        {
+            FillCustomerDataByPhoneNumber(gunaLineTextBox2.Text.Trim());
+        }
 
 
+        private void LoadPhoneNumbers()
+        {
+            try
+            {
+                con.Open();
 
+                string query = "SELECT DISTINCT PhoneNumber FROM CustomersBillsTb";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    AutoCompleteStringCollection autoCompleteData = new AutoCompleteStringCollection();
+
+                    while (reader.Read())
+                    {
+                        autoCompleteData.Add(reader["PhoneNumber"].ToString());
+                    }
+
+                    gunaLineTextBox2.AutoCompleteMode = AutoCompleteMode.SuggestAppend;
+                    gunaLineTextBox2.AutoCompleteSource = AutoCompleteSource.CustomSource;
+                    gunaLineTextBox2.AutoCompleteCustomSource = autoCompleteData;
+
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        private void LoadPhoneNumbersToComboBox()
+        {
+            try
+            {
+                con.Open();
+
+                string query = "SELECT DISTINCT PhoneNumber FROM CustomersBillsTb";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    SqlDataReader reader = cmd.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        gunaLineTextBox2.Items.Add(reader["PhoneNumber"].ToString());
+                    }
+
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        private void gunaLineTextBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                // الحصول على رقم الهاتف الذي تم اختياره من الاقتراحات
+                string phoneNumber = gunaLineTextBox2.Text.Trim();
+
+                // التأكد من أن رقم الهاتف غير فارغ
+                if (string.IsNullOrEmpty(phoneNumber)) return;
+
+                con.Open();
+
+                // استعلام لجلب بيانات العميل بناءً على رقم الهاتف
+                string query = "SELECT CustomerId, CustomerName, CustomerAddress FROM CustomersBillsTb WHERE PhoneNumber = @PhoneNumber";
+                using (SqlCommand cmd = new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue("@PhoneNumber", phoneNumber);
+
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    if (reader.Read())
+                    {
+                        // إذا تم العثور على العميل، تعبئة الحقول
+                        string customerId = reader["CustomerId"].ToString();
+                        string customerName = reader["CustomerName"].ToString();
+                        string customerAddress = reader["CustomerAddress"].ToString();
+
+                        // تعبئة الـ Label والـ TextBoxes
+                        CustomerIdLabel.Text = $"Customer Id: {customerId}"; // تنسيق النص للـ Label
+                        gunaLineTextBox3.Text = customerName; // تعبئة اسم العميل
+                        gunaLineTextBox1.Text = customerAddress; // تعبئة عنوان العميل
+
+                        // إضافة رسالة تأكيد (اختياري)
+                        //MessageBox.Show("Customer data has been successfully loaded.");
+                    }
+                    else
+                    {
+                        // إذا لم يتم العثور على العميل
+                        MessageBox.Show("This phone number does not exist in the database.");
+                    }
+
+                    reader.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+            finally
+            {
+                con.Close();
+            }
+        }
+
+        private void CustomerIdLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void PriceADLabel_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

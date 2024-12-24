@@ -64,7 +64,7 @@ namespace project_fo_3
                 con.Open();
 
                 // استعلام الإدخال (Insert) مع تضمين EmpId و EmpName كـ NVARCHAR
-                string query = "INSERT INTO EmployeeTab1 (EmpId, EmpName, EmpSal, EmpAge, EmpPhone, EmpPassword) " +
+                string query = "INSERT INTO EmployeeTb1 (EmpId, EmpName, EmpSal, EmpAge, EmpPhone, EmpPassword) " +
                                "VALUES (@EmpId, @EmpName, @EmpSal, @EmpAge, @EmpPhone, @EmpPassword)";
 
                 // إعداد الأمر مع المعلمات
@@ -133,7 +133,7 @@ namespace project_fo_3
                 con.Open();
 
                 // استعلام للتحقق من وجود EmpId في قاعدة البيانات
-                string checkQuery = "SELECT COUNT(*) FROM EmployeeTab1 WHERE EmpId = @EmpId";
+                string checkQuery = "SELECT COUNT(*) FROM EmployeeTb1 WHERE EmpId = @EmpId";
                 using (SqlCommand checkCmd = new SqlCommand(checkQuery, con))
                 {
                     checkCmd.Parameters.AddWithValue("@EmpId", tb1.Text.Trim());
@@ -149,7 +149,7 @@ namespace project_fo_3
                 }
 
                 // استعلام التحديث (Update)
-                string updateQuery = "UPDATE EmployeeTab1 SET EmpName = @EmpName, EmpSal = @EmpSal, EmpAge = @EmpAge, EmpPhone = @EmpPhone, EmpPassword = @EmpPassword " +
+                string updateQuery = "UPDATE EmployeeTb1 SET EmpName = @EmpName, EmpSal = @EmpSal, EmpAge = @EmpAge, EmpPhone = @EmpPhone, EmpPassword = @EmpPassword " +
                                      "WHERE EmpId = @EmpId";
 
                 // إعداد الأمر مع المعلمات
@@ -202,29 +202,53 @@ namespace project_fo_3
                     return;
                 }
 
-                con.Open();
+                // نافذة تأكيد قبل الحذف
+                DialogResult result = MessageBox.Show("Are you sure you want to delete this employee?",
+                                                      "Confirm Deletion",
+                                                      MessageBoxButtons.YesNo,
+                                                      MessageBoxIcon.Warning);
 
-                // استعلام الحذف (Delete)
-                string query = "DELETE FROM EmployeeTab1 WHERE EmpId = @EmpId";
-
-                // إعداد الأمر مع المعلمات
-                using (SqlCommand cmd = new SqlCommand(query, con))
+                if (result == DialogResult.Yes)
                 {
-                    cmd.Parameters.AddWithValue("@EmpId", tb1.Text.Trim());  // التعامل مع EmpId كـ VARCHAR
+                    // فتح الاتصال بقاعدة البيانات
+                    if (con.State == ConnectionState.Closed)
+                        con.Open();
 
-                    int rowsAffected = cmd.ExecuteNonQuery();
+                    // استعلام الحذف
+                    string query = "DELETE FROM EmployeeTb1 WHERE EmpId = @EmpId";
 
-                    if (rowsAffected > 0)
+                    using (SqlCommand cmd = new SqlCommand(query, con))
                     {
-                        MessageBox.Show("Employee Successfully Deleted");
+                        cmd.Parameters.AddWithValue("@EmpId", tb1.Text.Trim());  // التعامل مع EmpId كـ VARCHAR
+
+                        int rowsAffected = cmd.ExecuteNonQuery();
+
+                        if (rowsAffected > 0)
+                        {
+                            // إفراغ الحقول بعد الحذف
+                            tb1.Clear();
+                            tb2.Clear();
+                            tb3.Clear();
+                            tb4.Clear();
+                            tb5.Clear();
+                            tb6.Clear();
+
+                            MessageBox.Show("Employee Successfully Deleted");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Employee not found.");
+                        }
                     }
-                    else
-                    {
-                        MessageBox.Show("Employee not found.");
-                    }
+
+                    // تحديث DataGridView بعد الحذف
+                    PopulateGrid(EmployeeGV);
                 }
-
-                PopulateGrid(EmployeeGV); // تحديث DataGridView بعد الحذف
+                else
+                {
+                    // إذا اختار "No"، إلغاء العملية
+                    MessageBox.Show("Deletion Cancelled.");
+                }
             }
             catch (Exception ex)
             {
@@ -232,9 +256,11 @@ namespace project_fo_3
             }
             finally
             {
-                con.Close();
+                if (con.State == ConnectionState.Open)
+                    con.Close();
             }
         }
+
 
         // ملء DataGridView ببيانات الموظفين
         public void PopulateGrid(DataGridView EmployeeGV)
@@ -245,7 +271,7 @@ namespace project_fo_3
                     con.Open();
 
                 // جلب البيانات من الجدول
-                string query = "SELECT EmpId, EmpName, EmpSal, EmpAge, EmpPhone, EmpPassword FROM EmployeeTab1";
+                string query = "SELECT EmpId, EmpName, EmpSal, EmpAge, EmpPhone, EmpPassword FROM EmployeeTb1";
                 SqlDataAdapter adapter = new SqlDataAdapter(query, con);
                 DataTable dt = new DataTable();
                 adapter.Fill(dt);
@@ -374,7 +400,7 @@ namespace project_fo_3
                     con.Open();
 
                 // جلب كلمة المرور الأصلية بناءً على EmpId
-                string query = "SELECT EmpPassword FROM EmployeeTab1 WHERE EmpId = @EmpId";
+                string query = "SELECT EmpPassword FROM EmployeeTb1 WHERE EmpId = @EmpId";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.AddWithValue("@EmpId", empId);
 

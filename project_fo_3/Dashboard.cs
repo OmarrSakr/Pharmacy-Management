@@ -111,7 +111,7 @@ namespace project_fo_3
                 }
 
                 // استعلام للحصول على عدد الموظفين
-                string query = "SELECT COUNT(*) FROM EmployeeTab1";
+                string query = "SELECT COUNT(*) FROM EmployeeTb1";
                 using (SqlCommand cmd = new SqlCommand(query, con))
                 {
                     // تنفيذ الاستعلام واسترداد العدد
@@ -184,6 +184,40 @@ namespace project_fo_3
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
 
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    decimal totalSpent = Convert.ToDecimal(row["TotalSpent"]);
+                    string customerId = row["CustomerId"].ToString();
+
+                    // إزالة جميع النجوم السابقة من الرقم التعريفي
+                    customerId = customerId.Replace("★", "").Trim();
+
+                    // تحقق إذا كانت المشتريات أكبر من أو تساوي 15000
+                    if (totalSpent >= 15000)
+                    {
+                        // إضافة نجمة فقط إذا لم تكن موجودة
+                        if (!customerId.Contains("★"))
+                        {
+                            customerId += " ★"; // إضافة نجمة واحدة
+                        }
+                    }
+
+                    // تحديث الرقم التعريفي في قاعدة البيانات إذا تم تغييره
+                    if (row["CustomerId"].ToString() != customerId)
+                    {
+                        string updateQuery = "UPDATE CustomersBillsTb SET CustomerId = @UpdatedCustomerId WHERE CustomerId = @CustomerId";
+                        using (SqlCommand cmd = new SqlCommand(updateQuery, con))
+                        {
+                            cmd.Parameters.AddWithValue("@UpdatedCustomerId", customerId);
+                            cmd.Parameters.AddWithValue("@CustomerId", row["CustomerId"].ToString());
+                            cmd.ExecuteNonQuery();
+                        }
+
+                        // تحديث DataTable بالرقم التعريفي الجديد بعد التحديث في قاعدة البيانات
+                        row["CustomerId"] = customerId;
+                    }
+                }
+
                 // عرض البيانات في الـ DataGridView
                 CustomerGV.DataSource = dataTable;
 
@@ -209,6 +243,9 @@ namespace project_fo_3
                 }
             }
         }
+
+
+
 
         // دالة لتحميل البيانات إلى الجدول
         private void LoadCustomerData()
@@ -367,7 +404,7 @@ namespace project_fo_3
             }
         }
 
-
+        
     }
 
 }

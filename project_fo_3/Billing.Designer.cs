@@ -29,9 +29,9 @@ namespace project_fo_3
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -56,7 +56,6 @@ namespace project_fo_3
             this.label13 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.gunaLineTextBox1 = new Guna.UI.WinForms.GunaLineTextBox();
-            this.gunaLineTextBox2 = new Guna.UI.WinForms.GunaLineTextBox();
             this.gunaLineTextBox3 = new Guna.UI.WinForms.GunaLineTextBox();
             this.CustomerNameLabel = new System.Windows.Forms.Label();
             this.CustomerPhoneLabel = new System.Windows.Forms.Label();
@@ -72,6 +71,7 @@ namespace project_fo_3
             this.Discountbutton = new System.Windows.Forms.Button();
             this.clearbutton = new System.Windows.Forms.Button();
             this.CustomerIdLabel = new System.Windows.Forms.Label();
+            this.gunaLineTextBox2 = new System.Windows.Forms.ComboBox();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BillingGV)).BeginInit();
@@ -242,26 +242,26 @@ namespace project_fo_3
             // 
             // BillingGV
             // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.White;
-            this.BillingGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.DarkRed;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Firebrick;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.BillingGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle19.BackColor = System.Drawing.Color.White;
+            this.BillingGV.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle19;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.Color.DarkRed;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.Firebrick;
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.BillingGV.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle20;
             this.BillingGV.ColumnHeadersHeight = 30;
             this.BillingGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.DarkGreen;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.BillingGV.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle21.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle21.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle21.SelectionBackColor = System.Drawing.Color.DarkGreen;
+            dataGridViewCellStyle21.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle21.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.BillingGV.DefaultCellStyle = dataGridViewCellStyle21;
             this.BillingGV.GridColor = System.Drawing.Color.Firebrick;
             this.BillingGV.Location = new System.Drawing.Point(641, 119);
             this.BillingGV.Name = "BillingGV";
@@ -393,24 +393,9 @@ namespace project_fo_3
             this.gunaLineTextBox1.Name = "gunaLineTextBox1";
             this.gunaLineTextBox1.PasswordChar = '\0';
             this.gunaLineTextBox1.SelectedText = "";
-            this.gunaLineTextBox1.Size = new System.Drawing.Size(178, 30);
+            this.gunaLineTextBox1.Size = new System.Drawing.Size(217, 30);
             this.gunaLineTextBox1.TabIndex = 57;
             this.gunaLineTextBox1.TextChanged += new System.EventHandler(this.gunaLineTextBox1_TextChanged);
-            // 
-            // gunaLineTextBox2
-            // 
-            this.gunaLineTextBox2.BackColor = System.Drawing.Color.White;
-            this.gunaLineTextBox2.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.gunaLineTextBox2.FocusedLineColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
-            this.gunaLineTextBox2.Font = new System.Drawing.Font("Segoe UI", 9F);
-            this.gunaLineTextBox2.LineColor = System.Drawing.Color.DarkRed;
-            this.gunaLineTextBox2.Location = new System.Drawing.Point(256, 589);
-            this.gunaLineTextBox2.Name = "gunaLineTextBox2";
-            this.gunaLineTextBox2.PasswordChar = '\0';
-            this.gunaLineTextBox2.SelectedText = "";
-            this.gunaLineTextBox2.Size = new System.Drawing.Size(178, 30);
-            this.gunaLineTextBox2.TabIndex = 58;
-            this.gunaLineTextBox2.TextChanged += new System.EventHandler(this.gunaLineTextBox2_TextChanged);
             // 
             // gunaLineTextBox3
             // 
@@ -423,7 +408,7 @@ namespace project_fo_3
             this.gunaLineTextBox3.Name = "gunaLineTextBox3";
             this.gunaLineTextBox3.PasswordChar = '\0';
             this.gunaLineTextBox3.SelectedText = "";
-            this.gunaLineTextBox3.Size = new System.Drawing.Size(178, 30);
+            this.gunaLineTextBox3.Size = new System.Drawing.Size(217, 30);
             this.gunaLineTextBox3.TabIndex = 59;
             this.gunaLineTextBox3.TextChanged += new System.EventHandler(this.gunaLineTextBox3_TextChanged);
             // 
@@ -480,11 +465,11 @@ namespace project_fo_3
             this.ExpDate.Checked = true;
             this.ExpDate.Font = new System.Drawing.Font("Segoe UI", 9F);
             this.ExpDate.Format = System.Windows.Forms.DateTimePickerFormat.Long;
-            this.ExpDate.Location = new System.Drawing.Point(63, 697);
+            this.ExpDate.Location = new System.Drawing.Point(89, 695);
             this.ExpDate.MaxDate = new System.DateTime(9998, 12, 31, 0, 0, 0, 0);
             this.ExpDate.MinDate = new System.DateTime(1753, 1, 1, 0, 0, 0, 0);
             this.ExpDate.Name = "ExpDate";
-            this.ExpDate.Size = new System.Drawing.Size(295, 36);
+            this.ExpDate.Size = new System.Drawing.Size(311, 36);
             this.ExpDate.TabIndex = 64;
             this.ExpDate.Value = new System.DateTime(2024, 12, 3, 21, 18, 8, 333);
             this.ExpDate.ValueChanged += new System.EventHandler(this.ExpDate_ValueChanged_1);
@@ -537,6 +522,7 @@ namespace project_fo_3
             this.PriceADLabel.Size = new System.Drawing.Size(85, 23);
             this.PriceADLabel.TabIndex = 68;
             this.PriceADLabel.Text = "Price A.D";
+            this.PriceADLabel.Click += new System.EventHandler(this.PriceADLabel_Click);
             // 
             // label16
             // 
@@ -598,12 +584,24 @@ namespace project_fo_3
             this.CustomerIdLabel.Size = new System.Drawing.Size(103, 23);
             this.CustomerIdLabel.TabIndex = 77;
             this.CustomerIdLabel.Text = "Customer Id";
+            this.CustomerIdLabel.Click += new System.EventHandler(this.CustomerIdLabel_Click);
+            // 
+            // gunaLineTextBox2
+            // 
+            this.gunaLineTextBox2.Font = new System.Drawing.Font("Segoe UI Semibold", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.gunaLineTextBox2.FormattingEnabled = true;
+            this.gunaLineTextBox2.Location = new System.Drawing.Point(256, 593);
+            this.gunaLineTextBox2.Name = "gunaLineTextBox2";
+            this.gunaLineTextBox2.Size = new System.Drawing.Size(217, 31);
+            this.gunaLineTextBox2.TabIndex = 79;
+            this.gunaLineTextBox2.SelectedIndexChanged += new System.EventHandler(this.gunaLineTextBox2_SelectedIndexChanged);
             // 
             // Billing
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1463, 911);
+            this.Controls.Add(this.gunaLineTextBox2);
             this.Controls.Add(this.CustomerIdLabel);
             this.Controls.Add(this.clearbutton);
             this.Controls.Add(this.Discountbutton);
@@ -619,7 +617,6 @@ namespace project_fo_3
             this.Controls.Add(this.CustomerPhoneLabel);
             this.Controls.Add(this.CustomerNameLabel);
             this.Controls.Add(this.gunaLineTextBox3);
-            this.Controls.Add(this.gunaLineTextBox2);
             this.Controls.Add(this.gunaLineTextBox1);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -682,7 +679,6 @@ namespace project_fo_3
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Label label14;
         private Guna.UI.WinForms.GunaLineTextBox gunaLineTextBox1;
-        private Guna.UI.WinForms.GunaLineTextBox gunaLineTextBox2;
         private Guna.UI.WinForms.GunaLineTextBox gunaLineTextBox3;
         private System.Windows.Forms.Label CustomerNameLabel;
         private System.Windows.Forms.Label CustomerPhoneLabel;
@@ -698,5 +694,6 @@ namespace project_fo_3
         private System.Windows.Forms.Button Discountbutton;
         private System.Windows.Forms.Button clearbutton;
         private System.Windows.Forms.Label CustomerIdLabel;
+        private System.Windows.Forms.ComboBox gunaLineTextBox2;
     }
 }

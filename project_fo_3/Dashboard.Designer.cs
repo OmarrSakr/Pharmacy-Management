@@ -319,12 +319,12 @@ namespace project_fo_3
             dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.CustomerGV.DefaultCellStyle = dataGridViewCellStyle3;
             this.CustomerGV.GridColor = System.Drawing.Color.Firebrick;
-            this.CustomerGV.Location = new System.Drawing.Point(115, 412);
+            this.CustomerGV.Location = new System.Drawing.Point(88, 412);
             this.CustomerGV.Name = "CustomerGV";
             this.CustomerGV.RowHeadersVisible = false;
             this.CustomerGV.RowHeadersWidth = 51;
             this.CustomerGV.RowTemplate.Height = 24;
-            this.CustomerGV.Size = new System.Drawing.Size(1245, 367);
+            this.CustomerGV.Size = new System.Drawing.Size(1300, 367);
             this.CustomerGV.TabIndex = 48;
             this.CustomerGV.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.CustomerGV.ThemeStyle.AlternatingRowsStyle.Font = null;
