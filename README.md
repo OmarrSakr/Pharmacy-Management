@@ -7,13 +7,13 @@
   <img src="https://github.com/user-attachments/assets/f76113d1-ef6f-40d4-b2a9-0085dbcc7c85" alt="Screenshot 3"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/e297474e-e151-4b69-9ed3-f9b1087aabf4" alt="Screenshot 4"style="width: 24%; margin-right: 1%;" />
   <img src="https://github.com/user-attachments/assets/243eb165-9e13-450b-8af0-34bd7f2fc22e" alt="Screenshot 5"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/c6a0ba51-9616-41cb-83a3-58518a628acb" alt="Screenshot 6"style="width: 24%;" />
+  <img src="https://github.com/user-attachments/assets/a3fceae9-0216-4511-ac2d-77adfc97d11a" alt="Screenshot 6"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/acdec246-0486-48c8-b64c-b7950648de85" alt="Screenshot 7"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/db3a0ee8-4b64-45a9-8cb8-29e26bbe9f30" alt="Screenshot 8"style="width: 24%;" />
+  <img src="https://github.com/user-attachments/assets/57a843e1-5467-4ebb-b79f-336bbf25f9ad" alt="Screenshot 8"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/a86a5c7c-6477-47a5-8fcd-8115eb9e581a" alt="Screenshot 9"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/9f279b74-f977-41c8-8026-63823e57992e" alt="Screenshot 10"style="width: 48%;" />
+  <img src="https://github.com/user-attachments/assets/e435b390-fefe-4a96-be1f-3c9250d11b60" alt="Screenshot 10"style="width: 48%;" />
 </d>
-  
+
 # Pharmacy Management ( C# ) 💊
   
 A `static desktop application` built using `C#`, designed for managing pharmacy operations. It features
