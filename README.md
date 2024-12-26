@@ -13,7 +13,8 @@
   <img src="https://github.com/user-attachments/assets/a86a5c7c-6477-47a5-8fcd-8115eb9e581a" alt="Screenshot 9"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/e435b390-fefe-4a96-be1f-3c9250d11b60" alt="Screenshot 10"style="width: 48%;" />
 </d>
-
+  
+---
 # Pharmacy Management ( C# ) 💊
   
 A `static desktop application` built using `C#`, designed for managing pharmacy operations. It features
