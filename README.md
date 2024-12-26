@@ -101,8 +101,18 @@ We welcome `contributions` to **Pharmacy Management**! Here’s how you can help
 2. *Clone your fork* - Use the command:
    
    ```bash
-   git clone https://github.com/OmarrSakr/Pharmacy-Management.git
+    https://github.com/OmarrSakr/Pharmacy-Management.git
 
+---
+## 💡 How to Run the Project
+
+1. Open the project in *`Visual Studio`* Program .
+2. Compile and run the application.
+3. ⚠`Important`: **Ensure that the project is placed in the same directory as your database connection file for the application to connect to the database properly.**
+- This is the database connection string👇:
+   ```
+   public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\PROJECT_OOP\FO_ORGANIZATION\PHARMACY-MANAGEMENT\PROJECT_FO_3\PHARMACYOB.MDF;Integrated Security=True;");
+   ```
 ---
 ## 🔄 Future Enhancements:
 
