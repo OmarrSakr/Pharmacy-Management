@@ -25,7 +25,18 @@ management, billing, medicine tracking, and Companies records.
 
 - `C# (Windows Forms)` for building the user interface and implementing the business logic.
 - File Handling for saving and retrieving data using `.txt` files.
+  
+---
+  ## 💡 How to Run the Project
 
+1. Open the project in *`Visual Studio`* Program .
+2. Compile and run the application.
+3. ⚠`Important`: **Ensure that the project is placed in the same directory as your database connection file for the application to connect to the database properly.**
+- This is the database connection string👇:
+   ```
+   public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\PROJECT_OOP\FO_ORGANIZATION\PHARMACY-MANAGEMENT\PROJECT_FO_3\PHARMACYOB.MDF;Integrated Security=True;");
+   ```
+---
 ### 📂 Features:
 
 *`1. Agent Management`*
@@ -104,16 +115,6 @@ We welcome `contributions` to **Pharmacy Management**! Here’s how you can help
    ```bash
     https://github.com/OmarrSakr/Pharmacy-Management.git
 
----
-## 💡 How to Run the Project
-
-1. Open the project in *`Visual Studio`* Program .
-2. Compile and run the application.
-3. ⚠`Important`: **Ensure that the project is placed in the same directory as your database connection file for the application to connect to the database properly.**
-- This is the database connection string👇:
-   ```
-   public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\PROJECT_OOP\FO_ORGANIZATION\PHARMACY-MANAGEMENT\PROJECT_FO_3\PHARMACYOB.MDF;Integrated Security=True;");
-   ```
 ---
 ## 🔄 Future Enhancements:
 
