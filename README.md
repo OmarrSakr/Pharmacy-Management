@@ -11,7 +11,7 @@
   <img src="https://github.com/user-attachments/assets/acdec246-0486-48c8-b64c-b7950648de85" alt="Screenshot 7"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/57a843e1-5467-4ebb-b79f-336bbf25f9ad" alt="Screenshot 8"style="width: 24%;" />
   <img src="https://github.com/user-attachments/assets/a86a5c7c-6477-47a5-8fcd-8115eb9e581a" alt="Screenshot 9"style="width: 24%;" />
-  <img src="https://github.com/user-attachments/assets/e435b390-fefe-4a96-be1f-3c9250d11b60" alt="Screenshot 10"style="width: 48%;" />
+  <img src="https://github.com/user-attachments/assets/7a99bf1a-0258-4181-aad6-247115bdac40" alt="Screenshot 10"style="width: 48%;" />
 </d>
   
 ---
