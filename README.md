@@ -24,6 +24,7 @@
   <b>Pharmacy Management</b>: نظام إدارة صيدلية شامل مبني بـ C# لإدارة العمليات اليومية، المخزون، والفواتير بكفاءة عالية. 💊📊
   <br>
 
+[BuySpot Store Demo](https://omarrsakr.github.io/Pharmacy-Management/) •
 [Documentation](https://github.com/OmarrSakr/Pharmacy-Management/wiki) •
 [Report Issues](https://github.com/OmarrSakr/Pharmacy-Management/issues)
 
@@ -41,10 +42,10 @@
 
 ## 📊 Project Stats
 
-- 💊 **Modules**: 4 Core Management Systems  
-- 🏥 **Target**: Pharmacy & Healthcare Facilities  
-- 💻 **Platform**: Windows Desktop Application  
-- ⭐ **Rating**: 4.6/5 (based on healthcare professionals feedback)  
+- 💊 **Modules**: 4 Core Management Systems
+- 🏥 **Target**: Pharmacy & Healthcare Facilities
+- 💻 **Platform**: Windows Desktop Application
+- ⭐ **Rating**: 4.6/5 (based on healthcare professionals feedback)
 - 🌐 **Visitors**: <img class="badge" style="vertical-align: middle;" src="https://komarev.com/ghpvc/?username=Pharmacy-Management&style=plastic&color=blue&label=Views" alt="Repo Views">
 
 </p>
@@ -104,6 +105,11 @@
 - [🤝 Contributing](#-contributing)
 - [📪 Feedback](#-feedback)
 - [📜 License](#-license)
+
+---
+## 🌐 Live Demo
+
+Check out the live demo of **Pharmacy Management** at 👉 [Pharmacy Store Demo](https://omarrsakr.github.io/Pharmacy-Management/)
 
 ---
 
@@ -173,6 +179,7 @@ Pharmacy-Management/
 ## 🔧 Installation
 
 ### **Prerequisites**
+
 - Windows 10/11 (64-bit recommended)
 - .NET Framework 4.7.2 or higher
 - Visual Studio 2019 or later (for development)
@@ -193,12 +200,13 @@ cd Pharmacy-Management
 ```
 
 3. **Open in Visual Studio**
+
    - Launch Visual Studio
    - Open `PharmacyManagement.sln`
 
 4. **Configure Database Connection**
    - Update the connection string in the code:
-   
+
 ```csharp
 public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\PROJECT_OOP\FO_ORGANIZATION\PHARMACY-MANAGEMENT\PROJECT_FO_3\PHARMACYOB.MDF;Integrated Security=True;");
 ```
@@ -242,6 +250,7 @@ public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalD
 ## 🔑 Login Information
 
 ### **Default Credentials**
+
 - **Username**: `admin`
 - **Password**: `123`
 
@@ -307,6 +316,7 @@ public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalD
 ## 📊 System Modules
 
 ### **1. Agent Management Module**
+
 - ➕ **Add New Agents**: Complete employee registration
 - 🔍 **Search & Filter**: Quick employee lookup
 - ✏️ **Edit Records**: Update employee information
@@ -314,6 +324,7 @@ public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalD
 - 📋 **View Details**: Comprehensive employee profiles
 
 ### **2. Billing System Module**
+
 - 💰 **Process Sales**: Record customer transactions
 - 🧾 **Generate Bills**: Create detailed invoices
 - 📊 **Transaction History**: View past sales records
@@ -321,6 +332,7 @@ public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalD
 - 📈 **Financial Reports**: Daily/monthly sales summaries
 
 ### **3. Medicine Inventory Module**
+
 - 💊 **Stock Management**: Track available quantities
 - 📅 **Expiry Monitoring**: Alert for expiring medicines
 - 🏷️ **Batch Tracking**: Manage batch numbers and dates
@@ -328,6 +340,7 @@ public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalD
 - ⚠️ **Low Stock Alerts**: Inventory threshold warnings
 
 ### **4. Manufacturer Management Module**
+
 - 🏭 **Supplier Records**: Maintain manufacturer databases
 - 📞 **Contact Information**: Store communication details
 - 📦 **Product Catalog**: Track supplied medicines
@@ -339,7 +352,7 @@ public SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalD
 ## 🔒 Security Features
 
 - **🔐 Authentication System**: Secure login with credential validation
-- **📁 Data Backup**: Automatic file-based backup system  
+- **📁 Data Backup**: Automatic file-based backup system
 - **🛡️ Input Validation**: Prevent malicious data entry
 - **🔒 Session Management**: Secure user session handling
 - **📊 Audit Trail**: Track user activities and changes
@@ -396,6 +409,7 @@ git checkout -b feature/your-feature-name
 ```
 
 4. **Make your changes**
+
    - Follow C# coding standards
    - Test thoroughly on Windows environment
    - Update documentation as needed
@@ -435,12 +449,13 @@ We value your feedback to make this system better!
 
 **GitHub Issues**: [Report bugs or request features](https://github.com/OmarrSakr/Pharmacy-Management/issues)
 
-**Email Contact**: 
+**Email Contact**:
 <a href="https://mail.google.com/mail/?view=cm&fs=1&to=DevOmarHussien@gmail.com" target="_blank">
-  <img src="https://img.shields.io/badge/Contact%20Me-Email-blue?style=plastic&logo=gmail" alt="Email Me"/>
+<img src="https://img.shields.io/badge/Contact%20Me-Email-blue?style=plastic&logo=gmail" alt="Email Me"/>
 </a>
 
 **What to Include:**
+
 - Detailed bug descriptions
 - Steps to reproduce issues
 - System environment information
@@ -462,7 +477,7 @@ See the [LICENSE](./LICENSE.md) file for complete details.
 
 **⭐ If this project helped streamline your pharmacy operations, please give it a star! ⭐**
 
-*Built with 💊 for healthcare professionals and pharmacy management*
+_Built with 💊 for healthcare professionals and pharmacy management_
 
 **Made with ❤️ using C# and .NET Framework**
 
