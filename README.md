@@ -24,7 +24,7 @@
   <b>Pharmacy Management</b>: نظام إدارة صيدلية شامل مبني بـ C# لإدارة العمليات اليومية، المخزون، والفواتير بكفاءة عالية. 💊📊
   <br>
 
-[BuySpot Store Demo](https://omarrsakr.github.io/Pharmacy-Management/) •
+[ Pharmacy Management Demo](https://omarrsakr.github.io/Pharmacy-Management/) •
 [Documentation](https://github.com/OmarrSakr/Pharmacy-Management/wiki) •
 [Report Issues](https://github.com/OmarrSakr/Pharmacy-Management/issues)
 
@@ -109,7 +109,7 @@
 ---
 ## 🌐 Live Demo
 
-Check out the live demo of **Pharmacy Management** at 👉 [Pharmacy Store Demo](https://omarrsakr.github.io/Pharmacy-Management/)
+Check out the live demo of **Pharmacy Management** at 👉 [Pharmacy-Management Demo](https://omarrsakr.github.io/Pharmacy-Management/)
 
 ---
 
