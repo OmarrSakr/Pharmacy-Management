@@ -63,9 +63,10 @@ E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\projec
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.Properties.Resources.resources
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.csproj.GenerateResource.cache
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.csproj.CoreCompileInputs.cache
-E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.csproj.CopyComplete
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.exe
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.pdb
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\bin\Debug\Guna.UI2.dll
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.Dashboard.resources
 E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.csproj.AssemblyReference.cache
+E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_fo_3.exe.config
+E:\Project_OOP\FO_organization\Pharmacy-Management\project_fo_3\obj\Debug\project_.575189E0.Up2Date

@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Al Mohandes Pharmacy - نظام إدارة الصيدلية المتكامل</title>
+    <link rel="shortcut icon" href="./Icon_logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid white;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loader-text {
+            font-size: 18px;
+            animation: pulse 2s ease-in-out infinite;
+            text-align: center;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            padding: 0.8rem 1.5rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            direction: ltr;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.98);
+            color: #333;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        nav.scrolled .logo {
+            color: #667eea;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            position: relative;
+        }
+
+        nav.scrolled .nav-links a {
+            color: #333;
+        }
+
+        .nav-links a.active {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 3px;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 3px;
+        }
+
+        .nav-links.active a:hover::after {
+            width: 30%;
+        }
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 4px;
+            width: 28px;
+            height: 18px;
+            position: relative;
+        }
+
+        .hamburger span {
+            width: 100%;
+            height: 2px;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled .hamburger span {
+            background: #333;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .nav-links.active {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            background: rgba(255, 255, 255, 0.98);
+            width: 100%;
+            text-align: center;
+            gap: 1rem;
+            padding: 1.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .nav-links.active a {
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .nav-links.active a.active {
+            color: #ff6b6b;
+        }
+
+        .nav-links.active a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30%;
+            height: 3px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            border-radius: 3px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            margin-top: 0;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            z-index: 2;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f8f9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #f8f9ff;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+            margin: 0 10px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .cta-secondary {
+            background: linear-gradient(45deg, #20bf6b, #26de81);
+            box-shadow: 0 8px 25px rgba(32, 191, 107, 0.3);
+        }
+
+        .cta-secondary:hover {
+            box-shadow: 0 12px 35px rgba(32, 191, 107, 0.4);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #fff, #f8f9ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInUp 0.8s ease 0.2s forwards;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1.6rem;
+            border-radius: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            opacity: 0;
+            transform: translateY(30px);
+            will-change: transform, opacity;
+        }
+
+        .feature-card.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .feature-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+
+        .feature-details {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-top: 1rem;
+            text-align: right;
+        }
+
+        .feature-details ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-details li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-details li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-details li::before {
+            content: "✓";
+            color: #26de81;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+
+        /* System Flow */
+        .system-flow {
+            padding: 100px 2rem;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .flow-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .flow-step {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            will-change: transform, opacity;
+        }
+
+        .flow-step.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .flow-step:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            right: -15px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .step-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: white;
+        }
+
+        .step-description {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Statistics */
+        .stats {
+            padding: 80px 2rem;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2rem;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+            will-change: transform, opacity;
+        }
+
+        .stat-item.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #26de81;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Screenshots */
+        .screenshots {
+            padding: 100px 2rem;
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        .screenshots-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .screenshot-card {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            height: 450px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            opacity: 1;
+            /* Changed for faster loading */
+        }
+
+        .screenshot-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            loading: lazy;
+        }
+
+        .screenshot-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .screenshot-card:hover img {
+            transform: scale(1.15) translateY(-25px);
+            opacity: 0.9;
+        }
+
+        .screenshot-info {
+            padding: 1.5rem;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .screenshot-info h3 {
+            margin-bottom: 0.5rem;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .screenshot-info p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* Modal for Image Zoom */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.9);
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease;
+            will-change: opacity;
+        }
+
+        .modal.hidden {
+            opacity: 0;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 80%;
+            animation: fadeIn 0.5s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            will-change: transform, opacity;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            padding: 100px 2rem;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tech-items {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .tech-item {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: translateY(30px);
+            will-change: transform, opacity;
+        }
+
+        .tech-item.visible {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .tech-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 3rem 2rem 1rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        /* Back to Top Button */
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1100;
+            transition: opacity 0.3s ease, background 0.3s ease, transform 0.3s ease;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #back-to-top.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        #back-to-top:hover {
+            background: linear-gradient(45deg, #ee5a24, #ff6b6b);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 830px) and (min-width: 768px) {
+            nav {
+                padding: 0.6rem 1rem;
+            }
+
+            .logo {
+                font-size: 1.2rem;
+                gap: 6px;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .nav-links a {
+                font-size: 0.85rem;
+                padding: 0.3rem 0.6rem;
+            }
+
+            .hamburger {
+                width: 26px;
+                height: 16px;
+                gap: 3px;
+            }
+
+            .hamburger span {
+                height: 2px;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .logo {
+                font-size: 1.1rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .cta-button {
+                margin-bottom: 15px;
+                padding: 10px 30px;
+                font-size: 0.9rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .screenshots-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .screenshot-card {
+                height: 400px;
+            }
+
+            .screenshot-card img {
+                height: 250px;
+            }
+
+            .tech-items {
+                gap: 1rem;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .flow-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links.active a.active::after {
+                width: 30%;
+            }
+
+            .nav-links.active a:hover::after {
+                width: 30%;
+            }
+
+            #back-to-top {
+                width: 35px;
+                height: 35px;
+                font-size: 18px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .nav-links.active {
+                display: none !important;
+            }
+
+            .hamburger.active {
+                display: none !important;
+            }
+
+            .nav-links {
+                display: flex !important;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 107, 107, 0.7);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 107, 107, 1);
+        }
+
+        /* Particles background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: particle-float 15s infinite linear;
+        }
+
+        @keyframes particle-float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+        <div class="loader-text">
+            جاري تحميل نظام إدارة صيدلية المهندس...<br>
+            يرجى الانتظار...
+        </div>
+    </div>
+
+    <!-- Particles Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <span>🏥</span>
+                Al Mohandes Pharmacy
+            </div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home" class="active">الرئيسية</a></li>
+                <li><a href="#features">النظام</a></li>
+                <li><a href="#flow">آلية العمل</a></li>
+                <li><a href="#screenshots">الشاشات</a></li>
+                <li><a href="#tech">التقنيات</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Al Mohandes Pharmacy</h1>
+            <div class="hero-subtitle">نظام إدارة الصيدليات المتكامل</div>
+            <p>نظام شامل ومتطور لإدارة جميع عمليات الصيدلية من إدارة الموظفين والمخزون إلى الفواتير والتقارير المالية مع
+                واجهات سهلة الاستخدام وقواعد بيانات آمنة</p>
+            <div>
+                <a href="#features" class="cta-button">استكشف النظام</a>
+                <a href="#screenshots" class="cta-button cta-secondary">شاهد الشاشات</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">مكونات النظام</h2>
+            <p class="section-subtitle">نظام متكامل يغطي جميع احتياجات إدارة الصيدلية الحديثة</p>
+
+            <div class="features-grid">
+                <div class="feature-card">
+                    <span class="feature-icon">👥</span>
+                    <h3>إدارة الموظفين</h3>
+                    <p>نظام شامل لإدارة بيانات جميع الموظفين في الفروع مع صلاحيات مختلفة</p>
+                    <div class="feature-details">
+                        <ul>
+                            <li>الاسم والمعلومات الشخصية</li>
+                            <li>العمر والراتب الشهري</li>
+                            <li>رقم الهاتف والعنوان</li>
+                            <li>كلمة المرور للدخول</li>
+                            <li>إضافة وتعديل وحذف الموظفين</li>
+                            <li>ربط مع نظام تسجيل الدخول</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">💊</span>
+                    <h3>إدارة الأدوية والمخزون</h3>
+                    <p>قاعدة بيانات متكاملة للأدوية مع متابعة دقيقة للمخزون</p>
+                    <div class="feature-details">
+                        <ul>
+                            <li>اسم الدواء ووصفه التفصيلي</li>
+                            <li>سعر الشراء وسعر البيع</li>
+                            <li>الكمية المتاحة في المخزن</li>
+                            <li>تاريخ الانتهاء والتنبيهات</li>
+                            <li>الشركة المصنعة والموردة</li>
+                            <li>إضافة وتحديث وحذف الأدوية</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🏭</span>
+                    <h3>إدارة الشركات والموردين</h3>
+                    <p>نظام لتسجيل وإدارة بيانات الشركات والموردين</p>
+                    <div class="feature-details">
+                        <ul>
+                            <li>معرف فريد لكل شركة</li>
+                            <li>اسم الشركة الرسمي</li>
+                            <li>رقم الهاتف والفاكس</li>
+                            <li>العنوان التفصيلي</li>
+                            <li>ربط مع قاعدة بيانات الأدوية</li>
+                            <li>تتبع التعاملات والفواتير</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🧾</span>
+                    <h3>نظام الفواتير المتطور</h3>
+                    <p>واجهة متقدمة لإنشاء الفواتير مع جميع التفاصيل المطلوبة</p>
+                    <div class="feature-details">
+                        <ul>
+                            <li>اختيار الأدوية من المخزون</li>
+                            <li>تحديد الكميات والخصومات</li>
+                            <li>بيانات العميل كاملة</li>
+                            <li>اسم الموظف المسؤول</li>
+                            <li>التاريخ والوقت التلقائي</li>
+                            <li>طباعة فاتورة احترافية</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">📊</span>
+                    <h3>لوحة التحكم الرئيسية</h3>
+                    <p>داشبورد شاملة تعرض جميع إحصائيات النظام</p>
+                    <div class="feature-details">
+                        <ul>
+                            <li>عدد الموظفين النشطين</li>
+                            <li>عدد الشركات المتعاملة</li>
+                            <li>إجمالي المبيعات</li>
+                            <li>ملخص المبيعات التفصيلي</li>
+                            <li>معلومات العملاء</li>
+                            <li>تتبع الموظفين والمبيعات</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="feature-card">
+                    <span class="feature-icon">🔐</span>
+                    <h3>نظام الأمان والحماية</h3>
+                    <p>نظام تسجيل دخول آمن مع حماية شاملة للبيانات</p>
+                    <div class="feature-details">
+                        <ul>
+                            <li>شاشة تحميل أنيقة</li>
+                            <li>تسجيل دخول آمن</li>
+                            <li>التحقق من البيانات</li>
+                            <li>رسائل خطأ واضحة</li>
+                            <li>حماية قاعدة البيانات</li>
+                            <li>صلاحيات مختلفة للمستخدمين</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- System Flow -->
+    <section class="system-flow" id="flow">
+        <div class="container">
+            <h2 class="section-title">آلية عمل النظام</h2>
+            <p class="section-subtitle">تسلسل منطقي وسهل لجميع العمليات</p>
+
+            <div class="flow-steps">
+                <div class="flow-step">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">⏳</div>
+                    <div class="step-title">شاشة التحميل</div>
+                    <div class="step-description">شاشة ترحيبية أنيقة مع تحميل البيانات والموارد</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">🔑</div>
+                    <div class="step-title">تسجيل الدخول</div>
+                    <div class="step-description">إدخال اسم المستخدم وكلمة المرور مع التحقق الآمن</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">🏠</div>
+                    <div class="step-title">الصفحة الرئيسية</div>
+                    <div class="step-description">لوحة التحكم مع الإحصائيات والتنقل السريع</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">4</div>
+                    <div class="step-icon">💊</div>
+                    <div class="step-title">إدارة الأدوية</div>
+                    <div class="step-description">عرض وإدارة قائمة الأدوية والمخزون</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">5</div>
+                    <div class="step-icon">👥</div>
+                    <div class="step-title">إدارة الموظفين</div>
+                    <div class="step-description">عرض وإدارة بيانات جميع الموظفين</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">6</div>
+                    <div class="step-icon">🏭</div>
+                    <div class="step-title">إدارة الشركات</div>
+                    <div class="step-description">عرض وإدارة بيانات الشركات والموردين</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">7</div>
+                    <div class="step-icon">🧾</div>
+                    <div class="step-title">إنشاء الفواتير</div>
+                    <div class="step-description">إنشاء فواتير المبيعات مع جميع التفاصيل</div>
+                </div>
+
+                <div class="flow-step">
+                    <div class="step-number">8</div>
+                    <div class="step-icon">🖨️</div>
+                    <div class="step-title">طباعة الفاتورة</div>
+                    <div class="step-description">طباعة الفاتورة النهائية باسم الصيدلية</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics -->
+    <section class="stats" id="stats">
+        <div class="container">
+            <h2 class="section-title">إحصائيات النظام</h2>
+            <p class="section-subtitle">أرقام تدل على شمولية وفعالية النظام</p>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">وحدات أساسية</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">8</div>
+                    <div class="stat-label">شاشات رئيسية</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">أمان البيانات</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">سعة التخزين</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots -->
+    <section class="screenshots" id="screenshots">
+        <div class="container">
+            <h2 class="section-title">شاشات النظام</h2>
+            <p class="section-subtitle">واجهات سهلة الاستخدام ومصممة بعناية</p>
+
+            <div class="screenshots-grid">
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-1.png" alt="شاشة التحميل" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>شاشة التحميل</h3>
+                        <p>شاشة ترحيبية أنيقة مع مؤثرات بصرية جميلة وتحميل سلس للموارد</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-3.png" alt="صفحة تسجيل الدخول" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>صفحة تسجيل الدخول</h3>
+                        <p>واجهة آمنة لتسجيل الدخول مع التحقق من صحة البيانات ورسائل الخطأ</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-4.png" alt="لوحة التحكم الرئيسية" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>لوحة التحكم الرئيسية</h3>
+                        <p>واجهة مركزية تتيح لك إدارة وتعديل جميع بيانات النظام: الموظفين، الأدوية، الشركات، والفواتير
+                            بسهولة وبشكل شامل.</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-5.png" alt="إدارة الأدوية" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>إدارة الأدوية</h3>
+                        <p>قائمة شاملة للأدوية مع إمكانية البحث والتعديل والإضافة والحذف</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-6.png" alt="إدارة الموظفين" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>إدارة الموظفين</h3>
+                        <p>نظام كامل لإدارة بيانات الموظفين مع جميع المعلومات الشخصية والوظيفية</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-7.png" alt="إدارة الشركات" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>إدارة الشركات</h3>
+                        <p>قاعدة بيانات للشركات والموردين مع ربط مباشر بالأدوية والفواتير</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-8.png" alt="نظام الفواتير" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>نظام الفواتير</h3>
+                        <p>واجهة متطورة لإنشاء الفواتير مع اختيار الأدوية وتسجيل بيانات العميل</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-9.png" alt="فاتورة مطبوعة" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>الفاتورة المطبوعة</h3>
+                        <p>فاتورة احترافية باسم الصيدلية مع جميع تفاصيل المعاملة والمبلغ الإجمالي</p>
+                    </div>
+                </div>
+
+                <div class="screenshot-card">
+                    <img src="./Pharmacy-Management-10.png" alt="لوحة التحكم الرئيسية" loading="lazy">
+                    <div class="screenshot-info">
+                        <h3>لوحة التحكم الرئيسية</h3>
+                        <p>عرض شامل للإحصائيات وملخص المبيعات مع بيانات العملاء والموظفين</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack" id="tech">
+        <div class="container">
+            <h2 class="section-title">التقنيات المستخدمة</h2>
+            <p class="section-subtitle">تقنيات حديثة ومجربة لضمان الأداء والاستقرار</p>
+
+            <div class="tech-items">
+                <div class="tech-item">C# Windows Forms</div>
+                <div class="tech-item">SQL Server LocalDB</div>
+                <div class="tech-item">Guna UI Framework</div>
+                <div class="tech-item">.NET Framework 4.7.2</div>
+                <div class="tech-item">Visual Studio 2019</div>
+                <div class="tech-item">ADO.NET</div>
+                <div class="tech-item">File Handling</div>
+                <div class="tech-item">Git Version Control</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#home">الرئيسية</a>
+                <a href="#features">النظام</a>
+                <a href="#flow">آلية العمل</a>
+                <a href="#screenshots">الشاشات</a>
+                <a href="#tech">التقنيات</a>
+                <a href="mailto:info@almohandes-pharmacy.com">التواصل</a>
+            </div>
+            <p>&copy; 2025 Al Mohandes Pharmacy Management System. جميع الحقوق محفوظة.</p>
+            <p>نظام إدارة صيدليات متكامل ومتطور لإدارة أعمالك بكفاءة عالية</p>
+            <br>
+            <p style="opacity: 0.7; font-size: 0.9rem;">
+                النظام يدعم إدارة متعددة الفروع مع قاعدة بيانات مركزية آمنة<br>
+                تسجيل دخول: admin / 123
+            </p>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" aria-label="Back to Top"><i class="fa-solid fa-arrow-up"></i></button>
+
+    <script>
+        // Loader
+        window.addEventListener('load', function () {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500); // Reduced loader time for faster initial load
+        });
+
+        // Preload images for screenshots section
+        const preloadImages = [
+            './Pharmacy-Management-1.png',
+            './Pharmacy-Management-3.png',
+            './Pharmacy-Management-4.png',
+            './Pharmacy-Management-5.png',
+            './Pharmacy-Management-6.png',
+            './Pharmacy-Management-7.png',
+            './Pharmacy-Management-8.png',
+            './Pharmacy-Management-9.png',
+            './Pharmacy-Management-10.png'
+        ];
+
+        preloadImages.forEach(src => {
+            const img = new Image();
+            img.src = src;
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function () {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('back-to-top');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+
+            // Update active nav link
+            updateActiveNavLink();
+        });
+
+        // Hamburger Menu Toggle
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu on resize to tablet/desktop
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 767) {
+                hamburger.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+                if (window.innerWidth <= 767) {
+                    navLinks.classList.remove('active');
+                    hamburger.classList.remove('active');
+                }
+            });
+        });
+
+        // Back to Top Button
+        document.getElementById('back-to-top').addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Update active nav link based on scroll position
+        function updateActiveNavLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            let currentSection = '';
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSection}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Create floating particles
+        function createParticles() {
+            const particles = document.getElementById('particles');
+            const particleCount = 20; // Reduced for performance
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 15 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+
+                particles.appendChild(particle);
+            }
+        }
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1, // Reduced threshold for faster triggering
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const children = entry.target.querySelectorAll('.feature-card, .flow-step, .stat-item, .tech-item, .section-title, .section-subtitle');
+                    children.forEach(child => {
+                        child.classList.add('visible');
+                    });
+                    observer.unobserve(entry.target); // Unobserve after loading
+                }
+            });
+        }, observerOptions);
+
+        // Observe sections
+        document.querySelectorAll('.features, .system-flow, .stats, .tech-stack').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Initialize particles
+        createParticles();
+
+        // Add interactive hover effects
+        document.querySelectorAll('.feature-card, .flow-step').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-10px) scale(1.02)';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+
+        // Dynamic typing effect for hero title
+        function typeWriter(element, text, delay = 100) {
+            element.innerHTML = '';
+            let i = 0;
+
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, delay);
+                }
+            }
+
+            type();
+        }
+
+        setTimeout(() => {
+            const heroTitle = document.querySelector('.hero h1');
+            if (heroTitle) {
+                typeWriter(heroTitle, 'Al Mohandes Pharmacy', 150);
+            }
+        }, 1500); // Reduced delay to match faster loader
+
+        // Counter animation for statistics
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stat-number');
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                if (target === '∞') return;
+
+                const targetNum = parseInt(target);
+                let current = 0;
+                const increment = targetNum / 30;
+
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= targetNum) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.ceil(current);
+                    }
+                }, 50);
+            });
+        }
+
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        });
+
+        const statsSection = document.querySelector('.stats');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+
+        // Modal Functions
+        let scrollYPosition = 0;
+
+        function openModal(src) {
+            const modal = document.getElementById("myModal");
+            const modalImg = document.getElementById("img01");
+            scrollYPosition = window.scrollY;
+            modal.style.display = "flex";
+            modalImg.src = src;
+            document.body.classList.add('no-scroll');
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById("myModal");
+            modal.classList.add('hidden');
+            setTimeout(() => {
+                modal.style.display = "none";
+                document.body.classList.remove('no-scroll');
+                window.scrollTo(0, scrollYPosition);
+            }, 500);
+        }
+
+        // Add click event listeners to screenshot cards
+        document.querySelectorAll('.screenshot-card').forEach(card => {
+            card.addEventListener('click', function () {
+                openModal(this.querySelector('img').src);
+            });
+        });
+
+        // Close modal when clicking outside the image
+        document.getElementById('myModal').addEventListener('click', function (e) {
+            if (e.target !== document.getElementById('img01') && e.target !== document.querySelector('.close')) {
+                closeModal();
+            }
+        });
+
+        // Initialize active nav link on page load
+        updateActiveNavLink();
+
+        // Preload screenshots section on clicking "شاهد الشاشات"
+        document.querySelector('.cta-secondary[href="#screenshots"]').addEventListener('click', () => {
+            const screenshotsSection = document.querySelector('#screenshots');
+            if (screenshotsSection) {
+                const cards = screenshotsSection.querySelectorAll('.screenshot-card');
+                cards.forEach(card => {
+                    card.classList.add('visible');
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
