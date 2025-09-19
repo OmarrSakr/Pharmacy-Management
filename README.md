@@ -31,6 +31,8 @@
 <br>
 
 **`Pharmacy Management System`** is a comprehensive desktop application built with **`C# Windows Forms`** designed to streamline pharmacy operations. It features multiple integrated modules for **employee management**, **billing systems**, **medicine inventory tracking**, and **manufacturer records** with secure data handling through file storage and database connectivity.
+
+<img src="./Pharmacy_Management0.png" alt="BuySpot Store Demo" width="600">
 </div>
 
 <div align="center">
