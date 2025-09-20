@@ -475,10 +475,10 @@ See the [LICENSE](./LICENSE.md) file for complete details.
 
 <div align="center">
 
-**⭐ If this project helped streamline your pharmacy operations, please give it a star! ⭐**
+**⭐ If you found this project helpful, please give it a star! ⭐**
 
-_Built with 💊 for healthcare professionals and pharmacy management_
+*Built with ❤️ by Omar Sakr*
 
-**Made with ❤️ using C# and .NET Framework**
+[![Follow on GitHub](https://img.shields.io/github/followers/OmarrSakr?style=social)](https://github.com/OmarrSakr)
 
 </div>
